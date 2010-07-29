@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ID_AddActivityError" xml:space="preserve">
+    <value>Aktivität konnte nicht hinzugefügt werden.</value>
+  </data>
+  <data name="ID_CheckingActivityType" xml:space="preserve">
+    <value>Prüfe Typ der Aktivität</value>
+  </data>
+  <data name="ID_CheckingDateFormat" xml:space="preserve">
+    <value>Prüfe Datumsformat</value>
+  </data>
+  <data name="ID_CheckingHeader" xml:space="preserve">
+    <value>Prüfe Kopfzeilen</value>
+  </data>
+  <data name="ID_CountingLines" xml:space="preserve">
+    <value>Zähle Anzahl der Zeilen</value>
+  </data>
+  <data name="ID_Done" xml:space="preserve">
+    <value>Fertig</value>
+  </data>
+  <data name="ID_Example" xml:space="preserve">
+    <value>
+Beispiel: </value>
+  </data>
+  <data name="ID_FileOpen" xml:space="preserve">
+    <value>CSV Datei konnte nicht geöffnet werden.</value>
+  </data>
+  <data name="ID_GettingPauseTimeFromGpsTrack" xml:space="preserve">
+    <value>Berechne Pausen-Abschnitte aus den GPS-Daten</value>
+  </data>
+  <data name="ID_Importing" xml:space="preserve">
+    <value>Importiere Aktivitäten</value>
+  </data>
+  <data name="ID_InvalidDelimeter" xml:space="preserve">
+    <value>Die Kopfzeile enthält keine gültigen Trennzeichen. Erlaubte Trennzeichen sind:  , ; tab</value>
+  </data>
+  <data name="ID_NoHeaderLine" xml:space="preserve">
+    <value>Keine Kopfzeile gefunden. Bitte verwenden Sie korrekte Bezeichner wie date, time, duration, distance</value>
+  </data>
+  <data name="ID_ReadLine" xml:space="preserve">
+    <value>Lesen aus der Datei fehlgeschlagen.</value>
+  </data>
+  <data name="ID_ReferToLogFile" xml:space="preserve">
+    <value>
+Weitere Informationen hierzu im Protokoll: </value>
+  </data>
+  <data name="ID_UnknownCategory" xml:space="preserve">
+    <value>Zeile(n) mit unbekannten Kategorien gefunden. Der Kategoriename muss dem Kategorienamen entsprechen, wie er in SportTracks angezeigt wird.
+Beispiele:
+Wandern
+Laufen: Wald</value>
+  </data>
+  <data name="ID_UseExistingGpsTrack" xml:space="preserve">
+    <value>GPS Strecke der vorhandenen Aktivität für die Berechung der Zeitstempel verwenden?
+{0}, {1} km, {2}</value>
+  </data>
+  <data name="ID_WrongBloodPressureFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem Blutdruckformat gefunden. Der Blutdruck muss als Dezimalzahl formattiert sein.
+Gültige Dezimaltrennzeichen sind: , oder .
+Beispiel: 128  oder  119.5</value>
+  </data>
+  <data name="ID_WrongBmiFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem BMI-Format gefunden. Der BMI muss als Dezimalzahl formattiert sein.
+Gültige Dezimaltrennzeichen sind: , oder .
+Beipiele: 17,3  or  18.1</value>
+  </data>
+  <data name="ID_WrongBodyFatFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem bodyfat Format gefunden. bodyfat muss als Dezimalzahl formattiert sein.
+Gültige Dezimaltrennzeichen sind: , oder .
+Beipiele: 17,3  or  18.1</value>
+  </data>
+  <data name="ID_WrongCadenceFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem cadence Format gefunden. Die cadence muss in rpm angegeben werden, formattiert als Decimalzahl.
+Gültige Dezimaltrennzeichen sind: , oder . Beispiel: 80.4 rpm or 85,3</value>
+  </data>
+  <data name="ID_WrongCaloriesFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem calories Format gefunden. calories muss als Dezimalzahl formattiert sein, gefolgt von einer Einheit.
+Gültige Dezimaltrennzeichen sind: , oder .
+Gltige Einheiten sind: kcal, kjoule.
+Wenn keine Einheit angegeben ist, wird folgende Einheit verwendet: kcal.
+Wert und Einheit k�nnen durch ein Leerzeichen getrennt sein.
+Beipiele: 580 kcal, 590.3</value>
+  </data>
+  <data name="ID_WrongClimbedFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem climbed Format gefunden. climbed muss als Dezimalzahl formattiert sein, gefolgt von einer Einheit.
+Gültige Dezimaltrennzeichen sind: , oder .
+Gltige Einheiten sind: km, k, mil, mile, miles, sm, nm, mi, m, meters, meter, yard, yards, yd, foot, feet, ft.
+Wenn keine Einheit angegeben ist, wird folgende Einheit verwendet: m.
+Wert und Einheit k�nnen durch ein Leerzeichen getrennt sein.
+Beipiele: 5k, 17 miles, 42.195 km, 10000m, 10,8km, 21</value>
+  </data>
+  <data name="ID_WrongDateFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem date Format gefunden. date muss formattiert werden, wie in Windows konfiguriert.</value>
+  </data>
+  <data name="ID_WrongDateTimeFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem datetime / timestamp Format gefunden. datetime / timestamp muss formattiert werden, wie in Windows konfiguriert.</value>
+  </data>
+  <data name="ID_WrongDistanceFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem distance Format gefunden. distance muss als Dezimalzahl formattiert sein, gefolgt von einer Einheit.
+Gültige Dezimaltrennzeichen sind: , oder .
+Gltige Einheiten sind: km, k, mil, mile, miles, sm, nm, mi, m, meters, meter, yard, yards, yd, foot, feet, ft.
+Wenn keine Einheit angegeben ist, wird folgende Einheit verwendet: km.
+Wert und Einheit k�nnen durch ein Leerzeichen getrennt sein.
+Beipiele: 5k, 17 miles, 42.195 km, 10000m, 10,8km, 21</value>
+  </data>
+  <data name="ID_WrongDurationFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem duration Format gefunden. duration muss wie folgt formattiert sein: H:mm:ss.f
+Beipiele:
+1:50:00 -&gt; eine Stunde und fünfzig 
+50:00 -&gt; fünfzig Minuten
+42 -&gt; 42 Minuten
+42:18.11 -&gt; 42 Minuten und 18.11 Sekunden
+10.5 -&gt; 10.5 seconds</value>
+  </data>
+  <data name="ID_WrongElevationFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem elevation Format gefunden. elevation muss als Dezimalzahl formattiert sein gefolgt von einer Einheit.
+Gültige Dezimaltrennzeichen sind: , oder .
+Gltige Einheiten sind: km, k, mil, mile, miles, sm, nm, mi, m, meters, meter, yard, yards, yd, foot, feet, ft.
+Wenn keine Einheit angegeben ist, wird folgende Einheit verwendet: m.
+Wert und Einheit k�nnen durch ein Leerzeichen getrennt sein.
+Beipiele: 118m, 0,823km, 217</value>
+  </data>
+  <data name="ID_WrongFieldCount" xml:space="preserve">
+    <value>Zeile(n) mit unterschiedlicher Anzahl an Feldern gefunden, wie in der Kopfzeile definiert.</value>
+  </data>
+  <data name="ID_WrongFieldName" xml:space="preserve">
+    <value>Die Kopfzeile enthält einen nicht unterstütztes Feld: </value>
+  </data>
+  <data name="ID_WrongHeartRateFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem heart rate Format gefunden. heart rate muss als Dezimalzahl formattiert sein.
+Gültige Dezimaltrennzeichen sind: , oder .
+Beipiele: 48  or  50.1</value>
+  </data>
+  <data name="ID_WrongHrmFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem hrm / heartrate Format gefunden. hrm  muss als Dezimalzahl formattiert sein.
+Gültige Dezimaltrennzeichen sind: , oder .</value>
+  </data>
+  <data name="ID_WrongIntensityFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem intensity Format gefunden. intensity muss als ganze Zahl zwischen 1 und 10 formattiert sein.
+Beipiele: 1  oder  5</value>
+  </data>
+  <data name="ID_WrongLatLongFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem latidute / longitude Format gefunden. Latitude / longitude muss als Dezimalzahl formattiert sein.
+Gültige Dezimaltrennzeichen sind: , oder .</value>
+  </data>
+  <data name="ID_WrongMoodFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem mood Format gefunden. mood muss als ganze Zahl zwischen 1 und 3 formattiert sein.
+Beipiele: 1  oder  3</value>
+  </data>
+  <data name="ID_WrongPowerFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem power Format gefunden. power muss in W angegeben werden, formattiert als Dezimalzahl.
+Gültige Dezimaltrennzeichen sind: , oder . Beispiel: 238.4 W or 128,3</value>
+  </data>
+  <data name="ID_WrongSleepFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem sleep Format gefunden. sleep muss wie folgt formattiert sein: H:mm:ss.f
+Beipiele:
+1:50:00 -&gt; eine Stunde und fünfzig 
+50:00 -&gt; fünfzig Minuten
+42 -&gt; 42 Minuten
+42:18.11 -&gt; 42 Minuten und 18.11 Sekunden
+10.5 -&gt; 10.5 seconds</value>
+  </data>
+  <data name="ID_WrongTimeFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem time Format gefunden. time muss formattiert sein, wie in Windows konfiguriert.</value>
+  </data>
+  <data name="ID_WrongWeightFormat" xml:space="preserve">
+    <value>Zeile(n) mit ungültigem weight Format gefunden. weight muss als Dezimalzahl formattiert sein, gefolgt von einer Einheit.
+Gültige Dezimaltrennzeichen sind: , oder .
+Gltige Einheiten sind: kg, st, lb.
+Wenn keine Einheit angegeben ist, wird folgende Einheit verwendet: kg.
+Wert und Einheit k�nnen durch ein Leerzeichen getrennt sein.
+Beipiele: 58kg, 59.3kg</value>
+  </data>
+</root>
