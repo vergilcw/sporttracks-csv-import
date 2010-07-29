@@ -1,24 +1,9 @@
-#summary One-sentence summary of this page.
+#summary The "WB CSV Importer" allows importing CSV files with SportTracks 3.0.
 
-= Introduction =
-
-Add your content here.
+= WB CSV Importer for SportTracks 2.0 =
 
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
-
-WB CSV Importer for SportTracks 2.0
-
-The "WB CSV Importer" allows importing CSV files with SportTracks 2.0.
-The importer is intended for migrating running journals or training data from other
-applications into SportTracks.
-
-Content
+= Content =
 1) CSV File Format
 2) Supported fields
 3) Installation
@@ -26,11 +11,11 @@ Content
 5) Version history
 
 
-Required SportTracks version: 2.0 build 2.0.3088, released June 15, 2008 or later.
-Be sure to save the file with the exension ".st2plugin", the internet browser might suggest downloading it as a ".zip" file.
+Required SportTracks version: 3.0 build 3.0.3858 or later.
+Be sure to save the file with the exension ".st3plugin", the internet browser might suggest downloading it as a ".zip" file.
 
 
-1) CSV File Format
+= CSV File Format =
 
 The following data fields are supported:
 Date, time, datetime, timestamp, rowdate, entrydate,
@@ -90,7 +75,7 @@ the value can be omitted but the following separator must be given nevertheless 
 
 
 
-2) Supported fields:
+= Supported fields =
 
 date, entrydate: date of workout, formatted as configured in windows for the current locale.
 So 04/24/2008 would be typical for the US, the same date would be 24.04.2008 for Germany.
@@ -280,16 +265,15 @@ Examples:
 
 
 
-3) Installation
+= Installation =
 
-Required SportTracks version: 2.0 build 2.0.3088, released June 15, 2008 or later.
-Be sure to save the file with the exension ".st2plugin", the internet browser might suggest downloading it as a ".zip" file.
+Be sure to save the file with the exension ".st3plugin", the internet browser might suggest downloading it as a ".zip" file.
 
 3.1) First time installation of the WB CSV Importer Plugin:
 - Click on the download link
-- Download "WB_Csv_Importer_v1.0.7.st2plugin" to your harddisk
+- Download the st3plugin file to your harddisk
 - Close SportTracks.
-- Doubleclick "WB_Csv_Importer_v1.0.7.st2plugin", SportTracks will install the plugin
+- Doubleclick the st3plugin file, SportTracks will install the plugin
 - Launch SportTracks.
 - The "WB CSV Importer" will be listed as one of the installed plugins (Settings -> Plugins).
 
@@ -303,7 +287,7 @@ Be sure to save the file with the exension ".st2plugin", the internet browser mi
 
 
 
-4) Usage
+= Usage =
 From SportTracks click on import and choose the CSV file to be imported.
 
 Excel Hints
@@ -341,7 +325,11 @@ the plugin inserts 0 for power and cadence. In that way the data profile of the 
 
 
 
-5) Version history
+= Version history =
+
+WbSportTracksCsvImporter.dll v3.0.1.0
+- Compatibility with SportTracks 3.0
+
 
 WbSportTracksCsvImporter.dll v1.0.22.0
 - Compatibility with "rowpro3"
