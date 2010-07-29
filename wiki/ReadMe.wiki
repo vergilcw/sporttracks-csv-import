@@ -1,6 +1,6 @@
 #summary The "WB CSV Importer" allows importing CSV files with SportTracks 3.0.
 
-= WB CSV Importer for SportTracks 2.0 =
+= WB CSV Importer for SportTracks =
 
 
 = Content =
