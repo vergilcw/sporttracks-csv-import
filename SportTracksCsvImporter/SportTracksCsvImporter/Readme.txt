@@ -1,6 +1,4 @@
-WB CSV Importer for SportTracks 2.0
-
-The "WB CSV Importer" allows importing CSV files with SportTracks 2.0.
+The "WB CSV Importer" allows importing CSV files with SportTracks.
 The importer is intended for migrating running journals or training data from other
 applications into SportTracks.
 
@@ -9,11 +7,8 @@ Content
 2) Supported fields
 3) Installation
 4) Usage
-5) Version history
 
 
-Required SportTracks version: 2.0 build 2.0.3088, released June 15, 2008 or later.
-Be sure to save the file with the exension ".st2plugin", the internet browser might suggest downloading it as a ".zip" file.
 
 
 1) CSV File Format
@@ -268,14 +263,11 @@ Examples:
 
 3) Installation
 
-Required SportTracks version: 2.0 build 2.0.3088, released June 15, 2008 or later.
-Be sure to save the file with the exension ".st2plugin", the internet browser might suggest downloading it as a ".zip" file.
-
 3.1) First time installation of the WB CSV Importer Plugin:
 - Click on the download link
-- Download "WB_Csv_Importer_v1.0.7.st2plugin" to your harddisk
+- Download the st3plugin file to your harddisk
 - Close SportTracks.
-- Doubleclick "WB_Csv_Importer_v1.0.7.st2plugin", SportTracks will install the plugin
+- Doubleclick the st3plugin file, SportTracks will install the plugin
 - Launch SportTracks.
 - The "WB CSV Importer" will be listed as one of the installed plugins (Settings -> Plugins).
 
@@ -324,93 +316,3 @@ Then the plugin finds the threshold speed from the GPS track so that the resulti
 the "time to be inserted". For the pause intervals (where speed is below threshold in the GPS data),
 the plugin inserts 0 for power and cadence. In that way the data profile of the iBike file is not changed.
 
-
-
-
-5) Version history
-
-WbSportTracksCsvImporter.dll v1.0.22.0
-- Compatibility with "rowpro3"
-  -> Ignore header lines
-  -> Handle token "avgwatts" as "watts"
-  -> Handle token "cals" as "calories"
-  -> Handle token "endhr" as "pulse"
-
-WbSportTracksCsvImporter.dll v1.0.21.0
-- Compatibility with "Indoor rower Concept 2"
-  -> Handle token "rowdate" as "datetime"
-  -> Handle token "tottime" as "duration"
-  -> Handle token "totaldistance" as distance with default unit meters
-  -> Handle token "averagewatts" as "power"
-  -> Handle token "totalcalories" as "calories"
-
-WbSportTracksCsvImporter.dll v1.0.15.0
-- Fixed import of date/time: Now I default to "local time".
-  Due to time zone conversion the dates of the imported activities could be wrong
-
-WbSportTracksCsvImporter.dll v1.0.14.0
-- Fixed setting of "Use entered data" for time series
-- Handle heartmax and maxheartrate as activity values
-- New datafields athleteheartmax and athletemaxheartrate as athlete values
-- Improved iBike import (correct handling of average and max values, new pause handling)
-
-WbSportTracksCsvImporter.dll v1.0.13.0
-- Fixed handling of decimal separator for number conversion
-  (currency decimal separator was used instead number decimal separator)
-- Fixed importing of invalid GPS track from iBike files with coordinates (0,0)
-
-WbSportTracksCsvImporter.dll v1.0.12.0
-- New recognized keywords: puls, kjoule
-- Import unmodified "Daum Ergometer" files
-- Import unmodified iBike files (auto-detect of time interval)
-- Merge iBike file into existing activity containing GPS data
-
-
-WbSportTracksCsvImporter.dll v1.0.9.0
-- New recognized keywords: entrydate, bodyweight, resthr, heartaverage, activity, heartmax, description,
-  details, comments, feeling
-- New datafields: sleep, diary, mood, subcategory, climbed, equipment, calories, intensity
-
-
-WbSportTracksCsvImporter.dll v1.0.7.0
-- Support decimal values for duration (hours, minutes or seconds)
-
-
-WbSportTracksCsvImporter.dll v1.0.6.0
-- Added localized error messages (German)
-- Changed setup according to new SportTracks plugin installation mechanism
-
-
-WbSportTracksCsvImporter.dll v1.0.5.0
-- Import trackpoints (tested with iBike and Daum Ergometer)
-- Ignore unknown fields
-- Date and time format detection: current locale, US, DE
-- New fields supported: timestamp, elapsed time, elevation, latitude, longitude,
-  heartrate, pulse, cadence, rpm, power, watt
-- Get default Date / Time from file timestamp
-
-
-WbSportTracksCsvImporter.dll v1.0.2.0
-- Added error messages
-- Write import log to %temp%\WbCsvImport.log file for detailed error analyis
-- Activity category lookup: Ignore blank after colon
-  (accept both "Running: Forrest" and "Running:Forrest")
-- Added more fields: weight, bmi, bodyfat, restingheartrate, maxheartrate,
-  systolic, diastolic.
-
-
-WbSportTracksCsvImporter.dll v1.0.1.0
-- Support german Umlaut (Windows ANSI)
-
-
-Logbook2Csv.exe v1.0.1.0
-- Don't crash when invalid data was entered
-- Support german Umlaut (Windows ANSI)
-
-
-WbSportTracksCsvImporter.dll v1.0.0.0
-- First release
-
-
-Logbook2Csv.exe v1.0.0.0
-- First release

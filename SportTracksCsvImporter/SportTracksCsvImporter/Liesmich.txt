@@ -1,6 +1,6 @@
-﻿WB CSV Importer für SportTracks 2.0
+﻿WB CSV Importer für SportTracks
 
-Der "WB CSV Importer" unterstützt den Import von CSV Dateien in SportTracks 2.0.
+Der "WB CSV Importer" unterstützt den Import von CSV Dateien in SportTracks
 Das Plugin ist dazu gedacht, Trainingsdaten von anderen Applikationen in SportTracks zu importieren.
 
 Inhalt
@@ -8,11 +8,7 @@ Inhalt
 2) Unterstützte Datenfelder
 3) Installation
 4) Bedienung
-5) Versionsgeschichte
 
-
-Voraussetzung: SportTracks Version: 2.0 build 2.0.3088, released 15. Juni 2008 oder neuer.
-Bitte laden Sie das PlugIn als Datei mit der Endung ".st2plugin" herunter.
 
 
 1) CSV Dateiformat
@@ -266,14 +262,13 @@ Beispiele:
 
 3) Installation
 
-Voraussetzung: SportTracks Version: 2.0 build 2.0.3088, released 15. Juni 2008 oder neuer.
-Bitte laden Sie das PlugIn als Datei mit der Endung ".st2plugin" herunter.
+Bitte laden Sie das PlugIn als Datei mit der Endung ".st3plugin" herunter.
 
 3.1) Erstmalige Installation des WB CSV Importer Plugin:
 - Klicken Sie auf den Download Link
-- Speichern Sie "WB_Csv_Importer_v1.0.7.st2plugin" auf Ihrer Festplatte
+- Speichern Sie die st3plugin Datei auf Ihrer Festplatte
 - Beenden Sie SportTracks.
-- Klicken Sie doppelt auf "WB_Csv_Importer_v1.0.7.st2plugin", SportTracks installiert das Plugin automatisch.
+- Klicken Sie doppelt auf die st3plugin Datei, SportTracks installiert das Plugin automatisch.
 - Starten Sie SportTracks.
 - Das "WB CSV Importer" wird als installiertes Plugin geführt (Einstellungen -> Plugins).
 
@@ -320,82 +315,3 @@ End Sub
 
 Dieses Makro würde alle Zeilenumbrüche im Bereich a1:ag1592 durch ein Komma ersetzen.
 Schließen Sie den Makro-Editor und führen Sie das Makro aus.
-
-
-
-
-
-
-
-5) Versionsgeschichte
-
-WbSportTracksCsvImporter.dll v1.0.15.0
-- Fixed import of date/time: Now I default to "local time".
-  Due to time zone conversion the dates of the imported activities could be wrong
-
-WbSportTracksCsvImporter.dll v1.0.14.0
-- Fixed setting of "Use entered data" for time series
-- Handle heartmax and maxheartrate as activity values
-- New datafields athleteheartmax and athletemaxheartrate as athlete values
-- Improved iBike import (correct handling of average and max values, new pause handling)
-
-WbSportTracksCsvImporter.dll v1.0.13.0
-- Fixed handling of decimal separator for number conversion
-  (currency decimal separator was used instead number decimal separator)
-- Fixed importing of invalid GPS track from iBike files with coordinates (0,0)
-
-WbSportTracksCsvImporter.dll v1.0.12.0
-- New recognized keywords: puls, kjoule
-- Import unmodified "Daum Ergometer" files
-- Import unmodified iBike files (auto-detect of time interval)
-- Merge iBike file into existing activity containing GPS data
-
-
-WbSportTracksCsvImporter.dll v1.0.9.0
-- New recognized keywords: entrydate, bodyweight, resthr, heartaverage, activity, heartmax, description,
-  details, comments, feeling
-- New datafields: sleep, diary, mood, subcategory, climbed, equipment, calories, intensity
-
-
-WbSportTracksCsvImporter.dll v1.0.7.0
-- Support decimal values for duration (hours, minutes or seconds)
-
-
-WbSportTracksCsvImporter.dll v1.0.6.0
-- Added localized error messages (German)
-- Changed setup according to new SportTracks plugin installation mechanism
-
-
-WbSportTracksCsvImporter.dll v1.0.5.0
-- Import trackpoints (tested with iBike and Daum Ergometer)
-- Ignore unknown fields
-- Date and time format detection: current locale, US, DE
-- New fields supported: timestamp, elapsed time, elevation, latitude, longitude,
-  heartrate, pulse, cadence, rpm, power, watt
-- Get default Date / Time from file timestamp
-
-
-WbSportTracksCsvImporter.dll v1.0.2.0
-- Added error messages
-- Write import log to %temp%\WbCsvImport.log file for detailed error analyis
-- Activity category lookup: Ignore blank after colon
-  (accept both "Running: Forrest" and "Running:Forrest")
-- Added more fields: weight, bmi, bodyfat, restingheartrate, maxheartrate,
-  systolic, diastolic.
-
-
-WbSportTracksCsvImporter.dll v1.0.1.0
-- Support german Umlaut (Windows ANSI)
-
-
-Logbook2Csv.exe v1.0.1.0
-- Don't crash when invalid data was entered
-- Support german Umlaut (Windows ANSI)
-
-
-WbSportTracksCsvImporter.dll v1.0.0.0
-- First release
-
-
-Logbook2Csv.exe v1.0.0.0
-- First release
