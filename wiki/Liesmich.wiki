@@ -261,9 +261,7 @@ Bitte laden Sie das PlugIn als Datei mit der Endung ".st3plugin" herunter.
 - Wählen Sie das "WB CSV Importer" Plugin aus
 - Dann klicken Sie auf "Update installieren" und folgen Sie den weiteren Anweisungen.
 - Wenn SportTracks meldet, dass das Plugin zuvor manuell deinstalliert werden muss,
-  fahren Sie bitte mit Schritt "Erstmalige Installation des WB CSV Importer Plugin" fort.
-  Diese Installation wird erfolgreich sein. Das "WB CSV Importer" Plugin entfernt die ältere Version
-  beim ersten Start.
+  fahren Sie bitte mit Schritt "Erstmalige Installation des WB CSV Importer Plugin" fort.   Diese Installation wird erfolgreich sein. Das "WB CSV Importer" Plugin entfernt die ältere Version beim ersten Start.
 
 
 
