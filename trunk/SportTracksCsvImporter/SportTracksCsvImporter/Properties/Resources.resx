@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ID_AddActivityError" xml:space="preserve">
+    <value>Could not add activity to SportTracks.</value>
+  </data>
+  <data name="ID_CheckingActivityType" xml:space="preserve">
+    <value>Activity type detection</value>
+  </data>
+  <data name="ID_CheckingDateFormat" xml:space="preserve">
+    <value>Checking date format</value>
+  </data>
+  <data name="ID_CheckingHeader" xml:space="preserve">
+    <value>Header detection</value>
+  </data>
+  <data name="ID_CountingLines" xml:space="preserve">
+    <value>Counting Lines</value>
+  </data>
+  <data name="ID_Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="ID_Example" xml:space="preserve">
+    <value>
+Example: </value>
+  </data>
+  <data name="ID_FileOpen" xml:space="preserve">
+    <value>Could not open the csv file.</value>
+  </data>
+  <data name="ID_GettingPauseTimeFromGpsTrack" xml:space="preserve">
+    <value>Calculating paused segments from GPS track</value>
+  </data>
+  <data name="ID_Importing" xml:space="preserve">
+    <value>Importing activities</value>
+  </data>
+  <data name="ID_InvalidDelimeter" xml:space="preserve">
+    <value>The header line does not contain valid delimeters. Supported delimeters are , ; tab</value>
+  </data>
+  <data name="ID_NoHeaderLine" xml:space="preserve">
+    <value>No header line found. Please use correct field names like date, time, duration or distance.</value>
+  </data>
+  <data name="ID_ReadLine" xml:space="preserve">
+    <value>Could not read from file.</value>
+  </data>
+  <data name="ID_ReferToLogFile" xml:space="preserve">
+    <value>
+For more information refer to the log file: </value>
+  </data>
+  <data name="ID_UnknownCategory" xml:space="preserve">
+    <value>Found line(s) with unknown categories. The category name must be identical
+with a unique subcategory name or the hierarchical category name as displayed
+in SportTracks
+Examples:
+Hiking
+Running: Forrest</value>
+  </data>
+  <data name="ID_UseExistingGpsTrack" xml:space="preserve">
+    <value>Use GPS track of existing activity for calculating timestamps?
+{0}, {1} km, {2}</value>
+  </data>
+  <data name="ID_WrongBloodPressureFormat" xml:space="preserve">
+    <value>Found line(s) with wrong blood pressure format. The blood pressure has to be formatted as decimal value.
+Supported decimal separators are: , or .
+Examples: 128  or  119.5</value>
+  </data>
+  <data name="ID_WrongBmiFormat" xml:space="preserve">
+    <value>Found line(s) with wrong BMI format. The BMI has to be formatted as decimal value.
+Supported decimal separators are: , or .
+Examples: 17,3  or  18.1</value>
+  </data>
+  <data name="ID_WrongBodyFatFormat" xml:space="preserve">
+    <value>Found line(s) with wrong bodyfat format. The bodyfat has to be formatted as decimal value.
+Supported decimal separators are: , or .
+Examples: 17,3  or  18.1</value>
+  </data>
+  <data name="ID_WrongCadenceFormat" xml:space="preserve">
+    <value>Found line(s) with wrong cadence format. The cadence has to be given as rpm, formatted as decimal value.
+Supported decimal separators are: , or . Example: 80.4 rpm or 85,3</value>
+  </data>
+  <data name="ID_WrongCaloriesFormat" xml:space="preserve">
+    <value>Found line(s) with wrong calories format. The calories have to be formatted as decimal value followed by a unit.
+Supported decimal separators are: , or .
+Supported units are: kcal, kjoule.
+When no unit is given, the value is handled as kcal.
+The value and the unit can be separated by a space.
+Examples: 580kcal, 590.3</value>
+  </data>
+  <data name="ID_WrongClimbedFormat" xml:space="preserve">
+    <value>Found line(s) with wrong climbed format. The climbed value has to be formatted as decimal value followed by a unit.
+Supported decimal separators are: , or .
+Supported units are: km, k, mil, mile, miles, sm, nm, mi, m, meters, meter, yard, yards, yd, foot, feet, ft.
+When no unit is given, the value is handled as m.
+The value and the unit can be separated by a space.
+Examples: 5k, 17 miles, 42.195 km, 10000m, 10,8km, 21</value>
+  </data>
+  <data name="ID_WrongDateFormat" xml:space="preserve">
+    <value>Found line(s) with wrong date format. The date must be formated as configured in Windows.</value>
+  </data>
+  <data name="ID_WrongDateTimeFormat" xml:space="preserve">
+    <value>Found line(s) with wrong datetime / timestamp format. The datetime / timestamp must be formated as configured in Windows.</value>
+  </data>
+  <data name="ID_WrongDistanceFormat" xml:space="preserve">
+    <value>Found line(s) with wrong distance format. The distance has to be formatted as decimal value followed by a unit.
+Supported decimal separators are: , or .
+Supported units are: km, k, mil, mile, miles, sm, nm, mi, m, meters, meter, yard, yards, yd, foot, feet, ft.
+When no unit is given, the value is handled as km.
+The value and the unit can be separated by a space.
+Examples: 5k, 17 miles, 42.195 km, 10000m, 10,8km, 21</value>
+  </data>
+  <data name="ID_WrongDurationFormat" xml:space="preserve">
+    <value>Found line(s) with wrong duration format. The duration has to be formatted as H:mm:ss.f
+Examples:
+1:50:00 -&gt; one hour and fifty minutes
+50:00 -&gt; fifty minutes
+42 -&gt; 42 minutes
+42:18.11 -&gt; 42 minutes and 18.11 seconds
+10.5 -&gt; 10.5 seconds</value>
+  </data>
+  <data name="ID_WrongElevationFormat" xml:space="preserve">
+    <value>Found line(s) with wrong elevation format. The elevation has to be formatted as decimal value followed by a unit.
+Supported decimal separators are: , or .
+Supported units are: km, k, mil, mile, miles, sm, nm, mi, m, meters, meter, yard, yards, yd, foot, feet, ft.
+When no unit is given, the value is handled as m.
+The value and the unit can be separated by a space.
+Examples: 118m, 0,823km, 217</value>
+  </data>
+  <data name="ID_WrongFieldCount" xml:space="preserve">
+    <value>Found line(s) with different field count than defined by header line.</value>
+  </data>
+  <data name="ID_WrongFieldName" xml:space="preserve">
+    <value>The header line contains a not supported field name: </value>
+  </data>
+  <data name="ID_WrongHeartRateFormat" xml:space="preserve">
+    <value>Found line(s) with wrong heart rate format. The heart rate has to be formatted as decimal value.
+Supported decimal separators are: , or .
+Examples: 48  or  50.1</value>
+  </data>
+  <data name="ID_WrongHrmFormat" xml:space="preserve">
+    <value>Found line(s) with wrong hrm / heartrate format. The hrm  has to be formatted as decimal value.
+Supported decimal separators are: , or .</value>
+  </data>
+  <data name="ID_WrongIntensityFormat" xml:space="preserve">
+    <value>Found line(s) with wrong intensity format. The intensity has to be given as a whole number between 1 and 10.</value>
+  </data>
+  <data name="ID_WrongLatLongFormat" xml:space="preserve">
+    <value>Found line(s) with wrong latidute / longitude format. The latitude / longitude has to be formatted as decimal value.
+Supported decimal separators are: , or .</value>
+  </data>
+  <data name="ID_WrongMoodFormat" xml:space="preserve">
+    <value>Found line(s) with wrong mood format. The mood has to be given as a whole number between 1 and 3.</value>
+  </data>
+  <data name="ID_WrongPowerFormat" xml:space="preserve">
+    <value>Found line(s) with wrong power format. The power has to be given as W, formatted as decimal value.
+Supported decimal separators are: , or . Example: 238.4 W or 128,3</value>
+  </data>
+  <data name="ID_WrongSleepFormat" xml:space="preserve">
+    <value>Found line(s) with wrong sleep format. The sleep value has to be formatted as H:mm:ss.f
+Examples:
+1:50:00 -&gt; one hour and fifty minutes
+50:00 -&gt; fifty minutes
+42 -&gt; 42 minutes
+42:18.11 -&gt; 42 minutes and 18.11 seconds
+10.5 -&gt; 10.5 seconds.</value>
+  </data>
+  <data name="ID_WrongTimeFormat" xml:space="preserve">
+    <value>Found line(s) with wrong time format. The time must be formated as configured in Windows.</value>
+  </data>
+  <data name="ID_WrongWeightFormat" xml:space="preserve">
+    <value>Found line(s) with wrong weight format. The weight has to be formatted as decimal value followed by a unit.
+Supported decimal separators are: , or .
+Supported units are: kg, st, lb.
+When no unit is given, the value is handled as kg.
+The value and the unit can be separated by a space.
+Examples: 58kg, 59.3kg</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Image_24_FileCSV" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Image_24_FileCSV.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>
