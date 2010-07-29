@@ -43,7 +43,7 @@ date;time;distance;duration;hrm;category;location;name;comment;weight;bmi;bodyfa
 
 The first line defines the contained fields. The fields can have any order.
 The line lists the field names separated by a separator character.
-Supported separators are: <Tab> ; ,
+Supported separators are: Tab ; ,
 The same separator must be used for all lines.
 
 
