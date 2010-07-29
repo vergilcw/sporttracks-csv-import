@@ -100,13 +100,12 @@ namespace WbSportTracksCsvImporter
             }
         }
 
-        IActivityCategory FindActivityCategory(string categoryName, IList<IActivityCategory> categoryList)
+        IActivityCategory FindActivityCategory(string categoryName, IEnumerable<IActivityCategory> categoryList)
         {
             //WriteToLogfile("Look for category: " + categoryName, true);
 
-            for (int iCat = 0; iCat < categoryList.Count; iCat++)
+            foreach (IActivityCategory cat in categoryList)
             {
-                IActivityCategory cat = categoryList[iCat];
                 //WriteToLogfile("Checking " + cat.Name.ToLower(), true);
 
                 if (categoryName.ToLower() == cat.Name.ToLower())
@@ -118,10 +117,8 @@ namespace WbSportTracksCsvImporter
 
             if (categoryName.Contains(":"))
             {
-                for (int iCat = 0; iCat < categoryList.Count; iCat++)
+                foreach (IActivityCategory cat in categoryList)
                 {
-                    IActivityCategory cat = categoryList[iCat];
-
                     string longCatName = cat.Name;
 
                     IActivityCategory parentCat = cat.Parent;
@@ -141,10 +138,8 @@ namespace WbSportTracksCsvImporter
             }
 
             //WriteToLogfile("Still not found, check subcatgories ...", true);
-            for (int iCat = 0; iCat < categoryList.Count; iCat++)
+            foreach (IActivityCategory cat in categoryList)
             {
-                IActivityCategory cat = categoryList[iCat];
-
                 if (cat.SubCategories != null)
                 {
                     //WriteToLogfile("Checking subcategories of " + cat.Name, true);
@@ -162,14 +157,12 @@ namespace WbSportTracksCsvImporter
             return null;
         }
 
-        bool FindEquipment(string equipmentNames, IList<IEquipmentItem> equipmentList, IList<IEquipmentItem> foundEquipment)
+        bool FindEquipment(string equipmentNames, IEnumerable<IEquipmentItem> equipmentList, ICollection<IEquipmentItem> foundEquipment)
         {
             string equipmentNamesToSearch=equipmentNames.ToLower();
 
-            for (int iEquipment = 0; iEquipment < equipmentList.Count; iEquipment++)
+            foreach (IEquipmentItem equipmentItem in equipmentList)
             {
-                IEquipmentItem equipmentItem = equipmentList[iEquipment];
-
                 if (equipmentItem.InUse)
                 {
                     if (equipmentNamesToSearch.Contains(equipmentItem.Name.ToLower()))
@@ -946,7 +939,7 @@ namespace WbSportTracksCsvImporter
 
                         GpsElement elementFrom = new GpsElement();
 
-                        elementFrom.elapsedtime = new TimeSpan(0, 0, from.ElapsedSeconds);
+                        elementFrom.elapsedtime = new TimeSpan(0, 0, (int)from.ElapsedSeconds);
                         elementFrom.distance = 0;
                         elementFrom.speed = 0;
                         elementFrom.isPause = true;
@@ -965,11 +958,11 @@ namespace WbSportTracksCsvImporter
                                 if (fromPoint != null && toPoint != null)
                                 {
                                     float delta = toPoint.DistanceMetersToPoint(fromPoint);
-                                    TimeSpan deltaTime = new TimeSpan(0, 0, iter.Current.ElapsedSeconds - from.ElapsedSeconds);
+                                    TimeSpan deltaTime = new TimeSpan(0, 0, (int)(iter.Current.ElapsedSeconds - from.ElapsedSeconds));
                                     float speed = delta / (float)deltaTime.TotalSeconds * 3600 / 1000;
 
                                     GpsElement elementTo = new GpsElement();
-                                    elementTo.elapsedtime = new TimeSpan(0, 0, iter.Current.ElapsedSeconds);
+                                    elementTo.elapsedtime = new TimeSpan(0, 0, (int)iter.Current.ElapsedSeconds);
                                     elementTo.distance = elementFrom.distance + delta;
                                     elementTo.speed = speed;
                                     elementTo.isPause = false;
@@ -979,10 +972,10 @@ namespace WbSportTracksCsvImporter
                                     {
                                         if (stoppedPoints > 0)
                                         {
-                                            TimeSpan stoppedTime = new TimeSpan(0, 0, iter.Current.ElapsedSeconds - stopped.ElapsedSeconds);
+                                            TimeSpan stoppedTime = new TimeSpan(0, 0, (int)(iter.Current.ElapsedSeconds - stopped.ElapsedSeconds));
                                             totalStopped += stoppedTime;
-                                            TimeSpan fromTime = new TimeSpan(0, 0, stopped.ElapsedSeconds);
-                                            TimeSpan toTime = new TimeSpan(0, 0, iter.Current.ElapsedSeconds);
+                                            TimeSpan fromTime = new TimeSpan(0, 0, (int)stopped.ElapsedSeconds);
+                                            TimeSpan toTime = new TimeSpan(0, 0, (int)iter.Current.ElapsedSeconds);
                                             //WriteToLogfile(string.Format("{0} points with slow speed, stopped for {1} seconds from {2} to {3}",stoppedPoints, stoppedTime.TotalSeconds,fromTime, toTime), true);
 
                                             pauses.Add(new Pause(fromTime, toTime, stoppedTime));
@@ -1394,7 +1387,7 @@ namespace WbSportTracksCsvImporter
                         IActivity activity = Application.Logbook.Activities[i];
                         if ((activity.GPSRoute!=null) && (activity.StartTime.Date == iBikeTimeStampStart.Date))
                         {
-                            TimeSpan trackDuration = new TimeSpan(0,0,activity.GPSRoute.TotalElapsedSeconds);
+                            TimeSpan trackDuration = new TimeSpan(0,0,(int)activity.GPSRoute.TotalElapsedSeconds);
                             DialogResult res = MessageDialog.Show(string.Format(Properties.Resources.ID_UseExistingGpsTrack, activity.StartTime.ToLocalTime(), activity.TotalDistanceMetersEntered / 1000.0, trackDuration.ToString()), Plugin.GetName(), MessageBoxButtons.YesNo);
 
                             if (res==DialogResult.Yes)
@@ -1405,8 +1398,8 @@ namespace WbSportTracksCsvImporter
                                 bCalculateIBikePauseFromGpsTrack = true;
 
                                 int iBikeTotalSeconds = iBikeTimeInterval * (totalLines - linesToIgnore);
-                                int expectedPausedSeconds = activity.GPSRoute.TotalElapsedSeconds - iBikeTotalSeconds;
-                                originalGpsTrackTotalSeconds = activity.GPSRoute.TotalElapsedSeconds;
+                                int expectedPausedSeconds = (int)activity.GPSRoute.TotalElapsedSeconds - iBikeTotalSeconds;
+                                originalGpsTrackTotalSeconds = (int)activity.GPSRoute.TotalElapsedSeconds;
 
                                 if(expectedPausedSeconds>0)
                                 {
