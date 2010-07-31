@@ -1,5 +1,7 @@
 ﻿WB CSV Importer für SportTracks
 
+http://code.google.com/p/sporttracks-csv-import/
+
 Der "WB CSV Importer" unterstützt den Import von CSV Dateien in SportTracks
 Das Plugin ist dazu gedacht, Trainingsdaten von anderen Applikationen in SportTracks zu importieren.
 
