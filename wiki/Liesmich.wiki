@@ -1,3 +1,5 @@
+#summary Anleitung
+
 =WB CSV Importer für SportTracks=
 
 Der "WB CSV Importer" unterstützt den Import von CSV Dateien in SportTracks
