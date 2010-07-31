@@ -2,6 +2,8 @@ The "WB CSV Importer" allows importing CSV files with SportTracks.
 The importer is intended for migrating running journals or training data from other
 applications into SportTracks.
 
+http://code.google.com/p/sporttracks-csv-import/
+
 Content
 1) CSV File Format
 2) Supported fields
