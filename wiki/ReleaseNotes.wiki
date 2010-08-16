@@ -1,0 +1,13 @@
+#summary History of Changes
+
+= Version 3.0.2 =
+
+Changes compared to 3.0.1:
+  * In case of an import error, write full internal error message to message box
+
+
+
+= Version 3.0.1 =
+
+Changes compared to 1.0.x:
+  * Compatible to SportTracks 3.0
