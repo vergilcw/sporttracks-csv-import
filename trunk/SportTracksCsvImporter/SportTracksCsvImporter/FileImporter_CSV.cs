@@ -1226,7 +1226,7 @@ namespace WbSportTracksCsvImporter
             catch(Exception e)
             {
                 WriteToLogfile("Could not import file: " + e.Message, true);
-                monitor.ErrorText = Properties.Resources.ID_FileOpen + Properties.Resources.ID_ReferToLogFile + LogfileName();
+                monitor.ErrorText = Properties.Resources.ID_FileOpen + " (" + e.Message + ")" + Properties.Resources.ID_ReferToLogFile + LogfileName();
                 resultCode = false;
             }
             finally
@@ -1375,7 +1375,7 @@ namespace WbSportTracksCsvImporter
             catch (Exception e)
             {
                 WriteToLogfile("Could not import file: " + e.Message, true);
-                monitor.ErrorText = Properties.Resources.ID_FileOpen + Properties.Resources.ID_ReferToLogFile + LogfileName();
+                monitor.ErrorText = Properties.Resources.ID_FileOpen + " (" + e.Message + ")" + Properties.Resources.ID_ReferToLogFile + LogfileName();
                 resultCode = false;
             }
             finally
@@ -1834,12 +1834,12 @@ namespace WbSportTracksCsvImporter
                                                                                 }
 
                                                                             }
-                                                                            catch
+                                                                            catch(Exception e)
                                                                             {
                                                                                 WriteToLogfile("Line contains wrong datetime / timestamp format: " + originalLine, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDateTimeFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDateTimeFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -1884,13 +1884,13 @@ namespace WbSportTracksCsvImporter
                                                                                 date = DateTime.Parse(values[i], chosenDateformat, System.Globalization.DateTimeStyles.AssumeLocal);
                                                                                 dateValid = true;
                                                                             }
-                                                                            catch
+                                                                            catch(Exception e)
                                                                             {
                                                                                 DateTime example = new DateTime(2008, 1, 31);
                                                                                 WriteToLogfile("Line contains wrong date format: " + originalLine, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDateFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDateFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_Example + example.ToShortDateString()
                                                                                         + Properties.Resources.ID_Example + example.ToLongDateString()
@@ -1942,13 +1942,13 @@ namespace WbSportTracksCsvImporter
                                                                                 {
                                                                                     duration = GetDecimalDuration(values[i], units[i], "s");
                                                                                 }
-                                                                                catch (Exception)
+                                                                                catch (Exception e)
                                                                                 {
                                                                                     DateTime example = new DateTime(2008, 1, 31, 14, 38, 52);
                                                                                     WriteToLogfile("Line contains wrong time format: " + originalLine, true);
                                                                                     if (!bFoundEmptyLine)
                                                                                     {
-                                                                                        monitor.ErrorText = Properties.Resources.ID_WrongTimeFormat
+                                                                                        monitor.ErrorText = Properties.Resources.ID_WrongTimeFormat + " (" + e.Message + ")"
                                                                                             + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                             + Properties.Resources.ID_Example + example.ToShortTimeString()
                                                                                             + Properties.Resources.ID_Example + example.ToLongTimeString()
@@ -2002,7 +2002,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDurationFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDurationFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2031,7 +2031,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDistanceFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDistanceFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2053,7 +2053,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDistanceFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDistanceFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2096,7 +2096,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDistanceFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDistanceFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2118,7 +2118,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongClimbedFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongClimbedFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2144,7 +2144,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongWeightFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongWeightFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2170,7 +2170,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongWeightFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongWeightFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2195,7 +2195,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongCaloriesFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongCaloriesFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2217,7 +2217,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongCaloriesFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongCaloriesFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2244,7 +2244,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongBmiFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongBmiFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2269,7 +2269,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongIntensityFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongIntensityFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2296,7 +2296,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongMoodFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongMoodFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2324,7 +2324,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongHeartRateFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongHeartRateFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2347,7 +2347,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongHeartRateFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongHeartRateFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2375,7 +2375,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongHeartRateFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongHeartRateFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2402,7 +2402,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongBloodPressureFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongBloodPressureFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2429,7 +2429,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongBloodPressureFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongBloodPressureFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2461,7 +2461,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongBodyFatFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongBodyFatFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2488,7 +2488,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongSleepFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongSleepFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2585,7 +2585,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongHrmFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongHrmFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2620,7 +2620,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongPowerFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongPowerFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2653,7 +2653,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongCadenceFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongCadenceFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2695,7 +2695,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongMoodFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongMoodFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2724,7 +2724,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongLatLongFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongLatLongFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -2753,7 +2753,7 @@ namespace WbSportTracksCsvImporter
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongLatLongFormat
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongLatLongFormat + " (" + e.Message + ")"
                                                                                         + "\n" + columns[i] + " --> " + values[i] + "\n"
                                                                                         + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
@@ -3255,7 +3255,7 @@ namespace WbSportTracksCsvImporter
                                                                     {
                                                                         WriteToLogfile("Could not add activity to SportTracks: " + originalLine, true);
                                                                         WriteToLogfile("Error: " + e.Message, true);
-                                                                        monitor.ErrorText = Properties.Resources.ID_AddActivityError
+                                                                        monitor.ErrorText = Properties.Resources.ID_AddActivityError + " (" + e.Message + ")"
                                                                             + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                         resultCode = false;
                                                                     }
@@ -3783,7 +3783,7 @@ namespace WbSportTracksCsvImporter
                                     catch (Exception e)
                                     {
                                         WriteToLogfile("Could not read line: " + e.Message, true);
-                                        monitor.ErrorText = Properties.Resources.ID_ReadLine + Properties.Resources.ID_ReferToLogFile + LogfileName();
+                                        monitor.ErrorText = Properties.Resources.ID_ReadLine + " (" + e.Message + ")" + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                         resultCode = false;
                                     }
                                 }
@@ -3804,7 +3804,7 @@ namespace WbSportTracksCsvImporter
                         catch (Exception e)
                         {
                             WriteToLogfile("Could not read header line: " + e.Message, true);
-                            monitor.ErrorText = Properties.Resources.ID_NoHeaderLine
+                            monitor.ErrorText = Properties.Resources.ID_NoHeaderLine + " (" + e.Message + ")"
                                 + Properties.Resources.ID_ReferToLogFile + LogfileName();
                             resultCode = false;
                         }
@@ -3812,7 +3812,7 @@ namespace WbSportTracksCsvImporter
                     catch (Exception e)
                     {
                         WriteToLogfile("Could not import file: " + e.Message, true);
-                        monitor.ErrorText = Properties.Resources.ID_FileOpen
+                        monitor.ErrorText = Properties.Resources.ID_FileOpen + " (" + e.Message + ")"
                             + Properties.Resources.ID_ReferToLogFile + LogfileName();
                         resultCode = false;
                     }
