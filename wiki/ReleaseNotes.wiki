@@ -1,6 +1,13 @@
 #summary History of Changes
 
-= Version 3.0.2 =
+
+= Version 3.0.2 Re-Release 2010-08-17 =
+
+Changes compared to 3.0.2:
+  * I have corrected the download package. The plugin.xml was missing.
+
+
+= Version 3.0.2  2010-08-16 =
 
 Changes compared to 3.0.1:
   * In case of an import error, write full internal error message to message box
