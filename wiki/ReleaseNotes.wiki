@@ -1,6 +1,14 @@
 #summary History of Changes
 
 
+= Version 3.0.3 =
+Released 2010-10-26
+
+Changes compared to 3.0.2:
+  * Fixed issue 2: lb following weight value pops up error message
+  * Fixed issue 3: 0.2lb is added to each lb weight
+
+
 = Version 3.0.2 Re-Release =
 Released 2010-08-17
 
