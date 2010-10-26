@@ -740,7 +740,7 @@ namespace WbSportTracksCsvImporter
             else if (sValue.EndsWith("lb"))
             {
                 float temp = (float)System.Convert.ToDouble(sValue.Substring(0, sValue.Length - 2));
-                weight = temp * (float)0.454;
+                weight = temp * (float)0.4535885167;
             }
             else if (unit == "kg")
             {
