@@ -734,12 +734,12 @@ namespace WbSportTracksCsvImporter
             }
             else if (sValue.EndsWith("st"))
             {
-                float temp = (float)System.Convert.ToDouble(sValue.Substring(0, sValue.Length - 1));
+                float temp = (float)System.Convert.ToDouble(sValue.Substring(0, sValue.Length - 2));
                 weight = temp * (float)6.35;
             }
             else if (sValue.EndsWith("lb"))
             {
-                float temp = (float)System.Convert.ToDouble(sValue.Substring(0, sValue.Length - 1));
+                float temp = (float)System.Convert.ToDouble(sValue.Substring(0, sValue.Length - 2));
                 weight = temp * (float)0.454;
             }
             else if (unit == "kg")
