@@ -1244,9 +1244,9 @@ namespace WbSportTracksCsvImporter
             {
                 string[] keywords = new string[]{"date", "entrydate", "time", "elapsed time", "datetime", "timestamp", "rowdate", "distance", "totaldistance", "duration", "tottime",
                                                "power", "watt", "averagewatts", "avgwatts", "cadence", "rpm", "calories", "cals", "output", "output", "kjoule", "intensity", 
-                                               "location", "activity", "category", "subcategory", "type", "name", "description", "comment", "hrm", "heartrate", "pulse", "puls", "heartaverage", "endhr", "details", "comments",
+                                               "location", "activity", "category", "subcategory", "type", "name", "description", "comment", "hrm", "heartrate", "heart rate", "pulse", "puls", "heartaverage", "endhr", "details", "comments",
                                                "equipment", 
-                                               "elevation", "latitude", "longitude", "climbed", "lap marker", "lap",
+                                               "elevation", "altitude", "latitude", "longitude", "climbed", "lap marker", "lap",
                                                "weight", "bodyweight", "bmi","restingheartrate", "resthr", "maxheartrate", "heartmax", "athletemaxheartrate", "athleteheartmax", "diary", 
                                                "systolic", "diastolic", "bodyfat", "sleep", "mood", "feeling"};
 
@@ -1629,6 +1629,11 @@ namespace WbSportTracksCsvImporter
                                     for (int i = 0; i < columns.GetLength(0); i++)
                                     {
                                         units[i] = "";
+                                        columns[i] = columns[i].Trim();
+                                        if (columns[i].StartsWith("\"") && columns[i].EndsWith("\""))
+                                        {
+                                            columns[i] = columns[i].Substring(1, columns[i].Length - 2);
+                                        }
                                         if (columns[i] != null)
                                         {
                                             columns[i] = columns[i].ToLower();
@@ -2078,6 +2083,7 @@ namespace WbSportTracksCsvImporter
                                                                         break;
 
                                                                     case "elevation":
+                                                                    case "altitude":
                                                                         if (bImporting || bCheckingTrack)
                                                                         {
                                                                             try
@@ -2559,6 +2565,7 @@ namespace WbSportTracksCsvImporter
 
                                                                     case "hrm":
                                                                     case "heartrate":
+                                                                    case "heart rate":
                                                                     case "pulse":
                                                                     case "puls":
                                                                     case "heartaverage":
@@ -2722,13 +2729,6 @@ namespace WbSportTracksCsvImporter
                                                                             {
                                                                                 WriteToLogfile("Line contains wrong latitude format: " + originalLine, true);
                                                                                 WriteToLogfile("Error: " + e.Message, true);
-                                                                                if (!bFoundEmptyLine)
-                                                                                {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongLatLongFormat + " (" + e.Message + ")"
-                                                                                        + "\n" + columns[i] + " --> " + values[i] + "\n"
-                                                                                        + Properties.Resources.ID_ReferToLogFile + LogfileName();
-                                                                                    resultCode = false;
-                                                                                }
                                                                             }
                                                                         }
                                                                         break;
@@ -2751,13 +2751,6 @@ namespace WbSportTracksCsvImporter
                                                                             {
                                                                                 WriteToLogfile("Line contains wrong longitude format: " + originalLine, true);
                                                                                 WriteToLogfile("Error: " + e.Message, true);
-                                                                                if (!bFoundEmptyLine)
-                                                                                {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongLatLongFormat + " (" + e.Message + ")"
-                                                                                        + "\n" + columns[i] + " --> " + values[i] + "\n"
-                                                                                        + Properties.Resources.ID_ReferToLogFile + LogfileName();
-                                                                                    resultCode = false;
-                                                                                }
                                                                             }
                                                                         }
                                                                         break;
