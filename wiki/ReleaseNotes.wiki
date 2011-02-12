@@ -1,5 +1,9 @@
 #summary History of Changes
 
+= Version 3.0.4 =
+Released 2011-02-12
+
+  * Fixed issue 4: Support quoted geader tokens, supported tokens "heart rate" and altitude, Tolerate longitude and latitude entries with invalid values
 
 = Version 3.0.3 =
 Released 2010-10-26
