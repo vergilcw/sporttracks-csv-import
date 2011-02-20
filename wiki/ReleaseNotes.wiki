@@ -1,5 +1,10 @@
 #summary History of Changes
 
+
+= Version 3.0.5 =
+Released 2011-02-20
+  * Fixed issue 6: When time column values contain a date, us it as activity date.
+
 = Version 3.0.4 =
 Released 2011-02-12
 
