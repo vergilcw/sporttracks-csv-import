@@ -1940,6 +1940,12 @@ namespace WbSportTracksCsvImporter
                                                                             {
                                                                                 time = DateTime.Parse(values[i], chosenTimeformat, System.Globalization.DateTimeStyles.AssumeLocal);
                                                                                 timeValid = true;
+
+                                                                                if (time.Date != DateTime.Now)
+                                                                                {
+                                                                                    dateAndTimeValid = true;
+                                                                                    dateAndTime = time;
+                                                                                };
                                                                             }
                                                                             catch
                                                                             {
