@@ -2793,7 +2793,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = true;
-                                                            WriteToLogfile("Date and time valid: " + startTime.ToString(), true);
+                                                            //WriteToLogfile("Date and time valid: " + startTime.ToString(), true);
 
                                                         }
                                                         else if (dateValid && timeValid)
@@ -2802,7 +2802,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = true;
-                                                            WriteToLogfile("Date valid and time valid: " + startTime.ToString(), true);
+                                                            //WriteToLogfile("Date valid and time valid: " + startTime.ToString(), true);
                                                         }
                                                         else if (dateFromTimeValid)
                                                         {
@@ -2810,7 +2810,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = true;
-                                                            WriteToLogfile("Time valid: " + startTime.ToString(), true);
+                                                            //WriteToLogfile("Time valid: " + startTime.ToString(), true);
                                                         }
                                                         else if (dateValid)
                                                         {
@@ -2818,7 +2818,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = false;
                                                             trackPointContainsTime = false;
-                                                            WriteToLogfile("Date valid: " + startTime.ToString(), true);
+                                                            //WriteToLogfile("Date valid: " + startTime.ToString(), true);
                                                         }
                                                         else if (timeValid)
                                                         {
@@ -2826,7 +2826,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = true;
-                                                            WriteToLogfile("Time valid: " + startTime.ToString(), true);
+                                                            //WriteToLogfile("Time valid: " + startTime.ToString(), true);
                                                         }
                                                         else
                                                         {
@@ -2834,7 +2834,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = false;
-                                                            WriteToLogfile("Date and Time invalid, use file time: " + startTime.ToString(), true);
+                                                            //WriteToLogfile("Date and Time invalid, use file time: " + startTime.ToString(), true);
                                                         }
 
                                                         if (bCheckingTrack)
@@ -2847,8 +2847,8 @@ namespace WbSportTracksCsvImporter
                                                             {
                                                                 if (startTime.Date == dateFirstLine.Date)
                                                                 {
-                                                                    WriteToLogfile("startTime.Date: " + startTime.Date.ToString(), true);
-                                                                    WriteToLogfile("dateFirstLine.Date: " + dateFirstLine.Date.ToString(), true);
+                                                                    //WriteToLogfile("startTime.Date: " + startTime.Date.ToString(), true);
+                                                                    //WriteToLogfile("dateFirstLine.Date: " + dateFirstLine.Date.ToString(), true);
                                                                     sameDate++;
                                                                 }
                                                             }
