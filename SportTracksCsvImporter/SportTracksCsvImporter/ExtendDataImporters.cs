@@ -78,61 +78,56 @@ namespace WbSportTracksCsvImporter
                             float totalAscendMeters = 0;
                             float totalDescendMeters = 0;
 
-                            ActivityInfoCache infoCache = new ActivityInfoCache();
-                            if (infoCache != null)
+                            ActivityInfo activityInfo = ActivityInfoCache.Instance.GetInfo(activity);
+                            if (activityInfo != null)
                             {
-                                ActivityInfo activityInfo = infoCache.GetInfo(activity);
-                                if (activityInfo != null)
+                                ZoneFiveSoftware.Common.Data.INumericTimeDataSeries elevationTrack = activityInfo.SmoothedElevationTrack;
+                                IEnumerator<ZoneFiveSoftware.Common.Data.ITimeValueEntry<float>> iter = elevationTrack.GetEnumerator();
+
+                                if (iter != null)
                                 {
-                                    ZoneFiveSoftware.Common.Data.INumericTimeDataSeries elevationTrack = activityInfo.SmoothedElevationTrack;
-                                    IEnumerator<ZoneFiveSoftware.Common.Data.ITimeValueEntry<float>> iter = elevationTrack.GetEnumerator();
+                                    WriteToLogfile("Got enumerator", true);
 
-                                    if (iter != null)
+                                    if (iter.Current == null)
                                     {
-                                        WriteToLogfile("Got enumerator", true);
+                                        WriteToLogfile("Move to first element", true);
+                                        iter.MoveNext();
+                                    }
 
-                                        if (iter.Current == null)
+                                    if (iter.Current != null)
+                                    {
+                                        float from = iter.Current.Value;
+
+                                        while (iter.MoveNext())
                                         {
-                                            WriteToLogfile("Move to first element", true);
-                                            iter.MoveNext();
-                                        }
-
-                                        if (iter.Current != null)
-                                        {
-                                            float from = iter.Current.Value;
-
-                                            while (iter.MoveNext())
+                                            if (iter.Current != null)
                                             {
-                                                if (iter.Current != null)
+                                                float current = iter.Current.Value;
+
+                                                if (current > from)
                                                 {
-                                                    float current = iter.Current.Value;
-
-                                                    if (current > from)
-                                                    {
-                                                        totalAscendMeters += current - from;
-                                                    }
-                                                    else if (current < from)
-                                                    {
-                                                        totalDescendMeters += current - from;
-                                                    }
-
-                                                    from = current;
-
+                                                    totalAscendMeters += current - from;
                                                 }
+                                                else if (current < from)
+                                                {
+                                                    totalDescendMeters += current - from;
+                                                }
+
+                                                from = current;
+
                                             }
                                         }
                                     }
-                                    else
-                                    {
-                                        WriteToLogfile("Could not get enumerator", true);
-                                    }
                                 }
-
-                                activity.TotalAscendMetersEntered = totalAscendMeters;
-                                activity.TotalDescendMetersEntered = totalDescendMeters;
-                                WriteToLogfile("Done", true);
+                                else
+                                {
+                                    WriteToLogfile("Could not get enumerator", true);
+                                }
                             }
 
+                            activity.TotalAscendMetersEntered = totalAscendMeters;
+                            activity.TotalDescendMetersEntered = totalDescendMeters;
+                            WriteToLogfile("Done", true);
                         }
                     }
                 }
@@ -159,56 +154,53 @@ namespace WbSportTracksCsvImporter
                             float totalAscendMeters = 0;
                             float totalDescendMeters = 0;
 
-                            ActivityInfoCache infoCache = new ActivityInfoCache();
-                            if (infoCache != null)
+                            ActivityInfo activityInfo = ActivityInfoCache.Instance.GetInfo(activity);
+                            if (activityInfo != null)
                             {
-                                ActivityInfo activityInfo = infoCache.GetInfo(activity);
-                                if (activityInfo != null)
+                                ZoneFiveSoftware.Common.Data.INumericTimeDataSeries elevationTrack = activityInfo.SmoothedElevationTrack;
+                                IEnumerator<ZoneFiveSoftware.Common.Data.ITimeValueEntry<float>> iter = elevationTrack.GetEnumerator();
+
+                                if (iter != null)
                                 {
-                                    ZoneFiveSoftware.Common.Data.INumericTimeDataSeries elevationTrack = activityInfo.SmoothedElevationTrack;
-                                    IEnumerator<ZoneFiveSoftware.Common.Data.ITimeValueEntry<float>> iter = elevationTrack.GetEnumerator();
+                                    WriteToLogfile("Got enumerator", true);
 
-                                    if (iter != null)
+                                    if (iter.Current == null)
                                     {
-                                        WriteToLogfile("Got enumerator", true);
+                                        WriteToLogfile("Move to first element", true);
+                                        iter.MoveNext();
+                                    }
 
-                                        if (iter.Current == null)
+                                    if (iter.Current != null)
+                                    {
+                                        float from = iter.Current.Value;
+
+                                        while (iter.MoveNext())
                                         {
-                                            WriteToLogfile("Move to first element", true);
-                                            iter.MoveNext();
-                                        }
-
-                                        if (iter.Current != null)
-                                        {
-                                            float from = iter.Current.Value;
-
-                                            while (iter.MoveNext())
+                                            if (iter.Current != null)
                                             {
-                                                if (iter.Current != null)
+                                                float current = iter.Current.Value;
+
+                                                if (current > from)
                                                 {
-                                                    float current = iter.Current.Value;
-
-                                                    if (current > from)
-                                                    {
-                                                        totalAscendMeters += current - from;
-                                                    }
-                                                    else if (current < from)
-                                                    {
-                                                        totalDescendMeters += current - from;
-                                                    }
-
-                                                    from = current;
-
+                                                    totalAscendMeters += current - from;
                                                 }
+                                                else if (current < from)
+                                                {
+                                                    totalDescendMeters += current - from;
+                                                }
+
+                                                from = current;
+
                                             }
                                         }
                                     }
-                                    else
-                                    {
-                                        WriteToLogfile("Could not get enumerator", true);
-                                    }
+                                }
+                                else
+                                {
+                                    WriteToLogfile("Could not get enumerator", true);
                                 }
                             }
+                            
                             activity.TotalAscendMetersEntered = totalAscendMeters;
                             activity.TotalDescendMetersEntered = totalDescendMeters;
                             WriteToLogfile("Done", true);
