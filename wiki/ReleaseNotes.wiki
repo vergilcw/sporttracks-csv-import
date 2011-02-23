@@ -1,5 +1,8 @@
 #summary History of Changes
 
+= Version 3.0.6 =
+Released 2011-02-23
+  * Fixed issue 7: Fixed detection of valid date in "time" values. Use date from "time" column only if datetime or date is not given. The bug was a side effect from fixing issue 6.
 
 = Version 3.0.5 =
 Released 2011-02-20
