@@ -262,7 +262,7 @@ Supported decimal separators are: , or .</value>
 Supported decimal separators are: , or .</value>
   </data>
   <data name="ID_WrongMoodFormat" xml:space="preserve">
-    <value>Found line(s) with wrong mood format. The mood has to be given as a whole number between 1 and 3.</value>
+    <value>Found line(s) with wrong mood or sleepquality format. The mood or sleepquality has to be given as a whole number between 1 and 3.</value>
   </data>
   <data name="ID_WrongPowerFormat" xml:space="preserve">
     <value>Found line(s) with wrong power format. The power has to be given as W, formatted as decimal value.

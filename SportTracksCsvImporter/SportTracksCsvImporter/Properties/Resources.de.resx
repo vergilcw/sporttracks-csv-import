@@ -261,7 +261,7 @@ Beipiele: 1  oder  5</value>
 Gültige Dezimaltrennzeichen sind: , oder .</value>
   </data>
   <data name="ID_WrongMoodFormat" xml:space="preserve">
-    <value>Zeile(n) mit ungültigem mood Format gefunden. mood muss als ganze Zahl zwischen 1 und 3 formattiert sein.
+    <value>Zeile(n) mit ungültigem mood oder sleepquality Format gefunden. mood und sleepquality muss als ganze Zahl zwischen 1 und 3 formattiert sein.
 Beipiele: 1  oder  3</value>
   </data>
   <data name="ID_WrongPowerFormat" xml:space="preserve">
