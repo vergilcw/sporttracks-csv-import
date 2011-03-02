@@ -1250,6 +1250,15 @@ namespace WbSportTracksCsvImporter
                                                "weight", "bodyweight", "bmi","restingheartrate", "resthr", "maxheartrate", "heartmax", "athletemaxheartrate", "athleteheartmax", "diary", 
                                                "systolic", "diastolic", "bodyfat", "sleep", "mood", "feeling"};
 
+                //Dictionary<string, int> customFieldMap
+                /*
+                for (int idx = 0; idx < Application.Logbook.CustomDataFieldDefinitions.Count; idx++)
+                {
+                }
+                 * */
+                //activity.SetCustomDataValue(
+
+
                 file = File.OpenText(filename);
 
                 string lineDummy = file.ReadLine();
@@ -1801,6 +1810,7 @@ namespace WbSportTracksCsvImporter
                                                         float speed = float.NaN;
                                                         int intensity = 0;
                                                         int mood = 0;
+                                                        int sleepQuality = 0;
                                                         bool newLap = false;
                                                         TimeSpan sleep = TimeSpan.Zero;
 
@@ -2509,6 +2519,32 @@ namespace WbSportTracksCsvImporter
                                                                         }
                                                                         break;
 
+                                                                    case "sleepquality":
+                                                                        if (bImporting || bCheckingTrack)
+                                                                        {
+                                                                            try
+                                                                            {
+                                                                                string sValue = values[i].ToLower();
+                                                                                sValue = sValue.Trim();
+
+                                                                                sleepQuality = System.Convert.ToInt32(sValue);
+                                                                                foundAthleteInfo = true;
+                                                                            }
+                                                                            catch (Exception e)
+                                                                            {
+                                                                                WriteToLogfile("Line contains wrong sleep quality format: " + originalLine, true);
+                                                                                WriteToLogfile("Error: " + e.Message, true);
+                                                                                if (!bFoundEmptyLine)
+                                                                                {
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongMoodFormat + " (" + e.Message + ")"
+                                                                                        + "\n" + columns[i] + " --> " + values[i] + "\n"
+                                                                                        + Properties.Resources.ID_ReferToLogFile + LogfileName();
+                                                                                    resultCode = false;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        break;
+
                                                                     case "location":
                                                                         if (bImporting || bCheckingTrack)
                                                                         {
@@ -2704,13 +2740,10 @@ namespace WbSportTracksCsvImporter
                                                                             }
                                                                             catch (Exception e)
                                                                             {
-                                                                                WriteToLogfile("Line contains wrong mood format: " + originalLine, true);
+                                                                                WriteToLogfile("Line contains lap format: " + originalLine, true);
                                                                                 WriteToLogfile("Error: " + e.Message, true);
                                                                                 if (!bFoundEmptyLine)
                                                                                 {
-                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongMoodFormat + " (" + e.Message + ")"
-                                                                                        + "\n" + columns[i] + " --> " + values[i] + "\n"
-                                                                                        + Properties.Resources.ID_ReferToLogFile + LogfileName();
                                                                                     resultCode = false;
                                                                                 }
                                                                             }
@@ -3174,6 +3207,9 @@ namespace WbSportTracksCsvImporter
                                                                             category = subcategory;
                                                                         }
 
+                                                                        //Application.Logbook.CustomDataFieldDefinitions[0].ObjectType
+                                                                        //activity.SetCustomDataValue(
+
 
                                                                         if (category.Length > 0)
                                                                         {
@@ -3389,6 +3425,10 @@ namespace WbSportTracksCsvImporter
                                                                         if ((mood >= 0) && (mood <= 3))
                                                                         {
                                                                             infoEntry.Mood = mood;
+                                                                        }
+                                                                        if ((sleepQuality >= 0) && (sleepQuality <= 3))
+                                                                        {
+                                                                            infoEntry.SleepQuality = sleepQuality;
                                                                         }
                                                                     }
                                                                 }

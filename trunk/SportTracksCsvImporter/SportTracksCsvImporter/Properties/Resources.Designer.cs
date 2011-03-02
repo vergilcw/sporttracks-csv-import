@@ -403,7 +403,7 @@ namespace WbSportTracksCsvImporter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Found line(s) with wrong mood format. The mood has to be given as a whole number between 1 and 3..
+        ///   Looks up a localized string similar to Found line(s) with wrong mood or sleepquality format. The mood or sleepquality has to be given as a whole number between 1 and 3..
         /// </summary>
         internal static string ID_WrongMoodFormat {
             get {
