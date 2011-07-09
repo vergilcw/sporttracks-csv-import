@@ -1134,7 +1134,7 @@ namespace WbSportTracksCsvImporter
             {
                 // for some reason, this isn't showing up in the splits chart
                 pmLap.AverageCadencePerMinute = pmAct.lapStrokeRate;
-                // need to localize
+                // need translations?
                 pmLap.Notes = "StrokeRate=" + pmAct.lapStrokeRate.ToString();
                 pmAct.totalLapStrokeRate += pmAct.lapStrokeRate;
 
@@ -1145,7 +1145,7 @@ namespace WbSportTracksCsvImporter
                 {
                     pmLap.Notes += "; ";
                 }
-                // CA: need to localize
+                // CA: need translations?
                 pmLap.Notes += "Efficiency=" + pmAct.lapEfficiency.ToString();
                 pmAct.totalLapEfficiency += pmAct.lapEfficiency;
 
@@ -1184,7 +1184,7 @@ namespace WbSportTracksCsvImporter
                 aveStrokeRate = pmAct.totalLapStrokeRate / validLaps;
                 aveEfficiency = pmAct.totalLapEfficiency / validLaps;
 
-                // CA: need to localize all the text
+                // CA: need to translate the text
                 if (aveStrokeRate > 0)
                 {
                     newNotes += "Average Stroke Rate: " + aveStrokeRate.ToString() + "\r\n";
@@ -1227,7 +1227,7 @@ namespace WbSportTracksCsvImporter
                 {
                     ILapInfo newLap = pmAct.currentActivity.Laps.Add(lastLapEnd,
                         pmAct.currentActivity.TotalTimeEntered - totalLapDuration);
-                    newLap.Notes = "Added lap to represent all rest time between swims";
+                    newLap.Notes = "Pause time summation";
                     newLap.Rest = true;
 
                 }
@@ -1805,7 +1805,7 @@ namespace WbSportTracksCsvImporter
                                             // poolmate csv files have a column dictating the units
                                             // save it for future use
                                             poolMateUnitsIdx = i;
-                                            WriteToLogfile("Found Units @ field" + i.ToString(), true);
+                                            //WriteToLogfile("Found Units @ field" + i.ToString(), true);
                                         }
                                         if (columns[i].StartsWith("\"") && columns[i].EndsWith("\""))
                                         {
@@ -3510,7 +3510,7 @@ namespace WbSportTracksCsvImporter
                                                                         {
                                                                             if (activity.Notes.Length > 0)
                                                                             {
-                                                                                activity.Notes += "\n\n" + comment;
+                                                                                activity.Notes += "\r\n\r\n" + comment;
                                                                             }
                                                                             else
                                                                             {
@@ -3522,12 +3522,13 @@ namespace WbSportTracksCsvImporter
 
                                                                             if (activity.Notes.Length > 0)
                                                                             {
-                                                                                WriteToLogfile("Adding to existing notes: " + activity.Notes, true);
-                                                                                activity.Notes += "\n\n" +Path.GetFileName(filename);
+                                                                                if (!activity.Notes.Contains(Path.GetFileName(filename)))
+                                                                                {
+                                                                                    activity.Notes += "\r\n\r\n" + Path.GetFileName(filename);
+                                                                                }
                                                                             }
-                                                                            else
+                                                                            else 
                                                                             {
-                                                                                WriteToLogfile("Adding new notes", true);
                                                                                 activity.Notes = Path.GetFileName(filename);
                                                                             }
                                                                         }
