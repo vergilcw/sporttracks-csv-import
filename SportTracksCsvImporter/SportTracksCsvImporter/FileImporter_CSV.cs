@@ -207,8 +207,10 @@ namespace WbSportTracksCsvImporter
         {
             return Path.GetTempPath() + "WbCsvImport.log";
         }
+
         void WriteToLogfile(string logline, bool append)
         {
+
             try
             {
                 string logFileName = LogfileName();
@@ -917,6 +919,35 @@ namespace WbSportTracksCsvImporter
             public bool insertZeroCadenceBefore;
         }
 
+        class PoolMateActivity
+        {
+            public PoolMateActivity()
+            {
+                currentActivity = null;
+                lapDistance = double.NaN;
+                lapStrokeRate = float.NaN;
+                lapEfficiency = float.NaN;
+                lapDuration = TimeSpan.Zero;
+                nextLapStartTime = DateTime.MinValue;
+                totalLapStrokeRate = 0;
+                totalLapEfficiency = 0;
+                poolLength = null;
+            }
+
+            public IActivity currentActivity;
+            public double lapDistance;
+            public float lapStrokeRate;
+            public float lapEfficiency;
+            public TimeSpan lapDuration;
+            public DateTime nextLapStartTime;
+            public string poolLength;
+            public string units;
+            public float totalLapStrokeRate;
+            public float totalLapEfficiency;
+
+
+        }
+
         bool GetPausedTimes(IGPSRoute route, TimeSpan expectedPausedTime, out Pause[] pausesArray, out GpsElement[] gpsElementsArray)
         {
             List<Pause> pauses=new List<Pause>();
@@ -1092,6 +1123,119 @@ namespace WbSportTracksCsvImporter
         }
 
 
+        void addPoolMateLap(DateTime startTime, PoolMateActivity pmAct)
+        {
+            ILapInfo pmLap = pmAct.currentActivity.Laps.Add(startTime, pmAct.lapDuration);
+            
+            // this isn't displayed
+            //pmLap.TotalCalories = pmAct.lapCalories;
+            pmLap.TotalDistanceMeters = (float)pmAct.lapDistance;
+            if (!float.IsNaN(pmAct.lapStrokeRate))
+            {
+                // for some reason, this isn't showing up in the splits chart
+                pmLap.AverageCadencePerMinute = pmAct.lapStrokeRate;
+                // need to localize
+                pmLap.Notes = "StrokeRate=" + pmAct.lapStrokeRate.ToString();
+                pmAct.totalLapStrokeRate += pmAct.lapStrokeRate;
+
+            }
+            if (!float.IsNaN(pmAct.lapEfficiency))
+            {
+                if ((pmLap.Notes != null) && (pmLap.Notes != ""))
+                {
+                    pmLap.Notes += "; ";
+                }
+                // CA: need to localize
+                pmLap.Notes += "Efficiency=" + pmAct.lapEfficiency.ToString();
+                pmAct.totalLapEfficiency += pmAct.lapEfficiency;
+
+            }
+        }
+
+        void addPoolMateSummaryDetails(PoolMateActivity pmAct)
+        {
+            string newNotes = "";
+            int validLaps = 0;
+            TimeSpan totalLapDuration = TimeSpan.Zero;
+            DateTime lastLapEnd = DateTime.MinValue;
+            float aveStrokeRate = 0;
+            float aveEfficiency = 0;
+
+            // no need to add anything if there's no distance (ie chrono mode)
+            if (!float.IsNaN(pmAct.currentActivity.TotalDistanceMetersEntered) &&
+                pmAct.currentActivity.TotalDistanceMetersEntered != 0)
+            {
+                foreach (ILapInfo lap in pmAct.currentActivity.Laps)
+                {
+                    lastLapEnd = lap.StartTime + lap.TotalTime;
+                    if (lap.TotalDistanceMeters != 0)
+                    {
+                        validLaps++;
+                        totalLapDuration += lap.TotalTime;
+                    }
+                    else
+                    {
+                        // mark this lap as rest since we didn't go anywhere
+                        lap.Rest = true;
+                    }
+                }
+
+                // setup the average info for the summary notes
+                aveStrokeRate = pmAct.totalLapStrokeRate / validLaps;
+                aveEfficiency = pmAct.totalLapEfficiency / validLaps;
+
+                // CA: need to localize all the text
+                if (aveStrokeRate > 0)
+                {
+                    newNotes += "Average Stroke Rate: " + aveStrokeRate.ToString() + "\r\n";
+                }
+
+                if (aveEfficiency > 0)
+                {
+                    newNotes += "Average Efficiency: " + aveEfficiency.ToString() + "\r\n";
+                }
+
+                if (pmAct.poolLength != null && pmAct.poolLength != "")
+                {
+                    newNotes += "Pool Length: " + pmAct.poolLength + " " + pmAct.units + "\r\n";
+                }
+
+                if (newNotes != "")
+                {
+                    if (pmAct.currentActivity.Notes == null)
+                    {
+                        pmAct.currentActivity.Notes = newNotes;
+
+                    }
+                    else
+                    {
+                        pmAct.currentActivity.Notes = newNotes + "\r\n" + pmAct.currentActivity.Notes;
+                    }
+                }
+
+                if (aveStrokeRate > 0)
+                {
+                    pmAct.currentActivity.AverageCadencePerMinuteEntered = aveStrokeRate;
+                }
+
+                // add in a bogus rest lap at the end to represent all of the rest times
+                // this is only done since there is no indication of rest in the csv file
+                // Some people may want their "swim only time" displayed as the total time
+                // rather than the total pool time
+                /* Unfortunately, ST doesn't calculate stopped time from "rest" laps :( */
+                if (pmAct.currentActivity.TotalTimeEntered > totalLapDuration)
+                {
+                    ILapInfo newLap = pmAct.currentActivity.Laps.Add(lastLapEnd,
+                        pmAct.currentActivity.TotalTimeEntered - totalLapDuration);
+                    newLap.Notes = "Added lap to represent all rest time between swims";
+                    newLap.Rest = true;
+
+                }
+
+                pmAct.currentActivity.UseEnteredData = true;
+            }
+        }
+
         #endregion
 
         #region IDataImporter Members
@@ -1131,14 +1275,16 @@ namespace WbSportTracksCsvImporter
             bool bContainsGpsData = false;
 
             bool bIsIbikeFile = false;
-            bool bIsrowpro3File = false;
             bool bCalculateIBikePauseFromGpsTrack = false;
+            bool bIsrowpro3File = false;
+            bool bIsPoolMateFile = false;
             int originalGpsTrackTotalSeconds = 0;
             IActivity mergeIBikeDestinationActivity = null;
             Pause[] pausesFromGpsTrack = null;
             GpsElement[] elementsFromGpsTrack = null;
             IBikeElement[] elementsFromIBike = null;
             List<IBikeElement> elementsFromIBikeList = new List<IBikeElement>();
+            PoolMateActivity poolMateAct = null;
             TimeSpan iBikeCurrentDuration = TimeSpan.Zero;
             DateTime iBikeTimeStampStart = DateTime.Now;
             int iBikeTimeInterval = 1; //seconds per data line
@@ -1148,7 +1294,7 @@ namespace WbSportTracksCsvImporter
 
             DateTime fileDateTime = DateTime.Now;
 
-
+            
             WriteToLogfile("Import: " + filename, false);
 
             try
@@ -1165,7 +1311,7 @@ namespace WbSportTracksCsvImporter
 
 
 
-
+            // Check for Daum Ergometer file
             try
             {
                 string filenameShort = Path.GetFileName(filename);
@@ -1203,6 +1349,8 @@ namespace WbSportTracksCsvImporter
             WriteToLogfile("Short date format of current locale: " + systemDateTimeformat.ShortDatePattern, true);
             WriteToLogfile("Short time format of current locale: " + systemDateTimeformat.ShortTimePattern, true);
 
+            
+            // get the number of lines in file
             monitor.StatusText = Properties.Resources.ID_CountingLines;
 
             try
@@ -1366,6 +1514,14 @@ namespace WbSportTracksCsvImporter
                         bIsrowpro3File = true;
                     }
 
+                    if (lineDummy.Contains("pool"))
+                    {
+
+                        //poolmate pro file
+                        bIsPoolMateFile = true;
+                        poolMateAct = new PoolMateActivity();
+                        WriteToLogfile("PoolMate Pro file", true);
+                    }
                     
                     if (monitor.Cancelled)
                     {
@@ -1553,6 +1709,7 @@ namespace WbSportTracksCsvImporter
                         }
 
                         bImporting = true;
+                        poolMateAct = new PoolMateActivity();
                     }
                     
 
@@ -1634,11 +1791,22 @@ namespace WbSportTracksCsvImporter
 
                                     string[] columns = headerline.Split(delimiterChars);
                                     string[] units = new string[columns.GetLength(0)];
+                                    int poolMateUnitsIdx = -1;
+
+
 
                                     for (int i = 0; i < columns.GetLength(0); i++)
                                     {
                                         units[i] = "";
                                         columns[i] = columns[i].Trim();
+
+                                        if (bIsPoolMateFile && columns[i] == "Units")
+                                        {
+                                            // poolmate csv files have a column dictating the units
+                                            // save it for future use
+                                            poolMateUnitsIdx = i;
+                                            WriteToLogfile("Found Units @ field" + i.ToString(), true);
+                                        }
                                         if (columns[i].StartsWith("\"") && columns[i].EndsWith("\""))
                                         {
                                             columns[i] = columns[i].Substring(1, columns[i].Length - 2);
@@ -1691,7 +1859,6 @@ namespace WbSportTracksCsvImporter
                                         bool foundLapStart = false;
                                         DateTime lapStartTime = DateTime.Now;
                                         DateTime lapEndTime = DateTime.Now;
-
 
                                         while (line != null)
                                         {
@@ -1813,11 +1980,16 @@ namespace WbSportTracksCsvImporter
                                                         int sleepQuality = 0;
                                                         bool newLap = false;
                                                         TimeSpan sleep = TimeSpan.Zero;
+                                                        
+                                                        //float poolMateLapCalories = float.NaN;
+                                                        //double poolMateLapDistance = double.NaN;
+                                                        //float poolMateLapStrokeRate = float.NaN;
+                                                        //string poolMateLapEfficiency = null;
+                                                        //TimeSpan poolMateLapDuration = TimeSpan.Zero;
+                                                        //DateTime poolMateNextLapStartTime = DateTime.MinValue;
+                                                                        
 
-
-
-
-                                                        for (int i = 0; i < values.GetLength(0); i++)
+                                                         for (int i = 0; i < values.GetLength(0); i++)
                                                         {
                                                             if ((columns[i] != null) && (columns[i].Length > 0) && (values[i] != null) && (values[i].Length > 0))
                                                             {
@@ -1893,6 +2065,7 @@ namespace WbSportTracksCsvImporter
 
                                                                     case "date":
                                                                     case "entrydate":
+                                                                    case "logdate":
                                                                         if (bImporting || bCheckingTrack)
                                                                         {
                                                                             try
@@ -1945,6 +2118,7 @@ namespace WbSportTracksCsvImporter
                                                                         break;
 
                                                                     case "time":
+                                                                    case "logtime":
                                                                         if (bImporting || bCheckingTrack)
                                                                         {
                                                                             try
@@ -2015,8 +2189,39 @@ namespace WbSportTracksCsvImporter
                                                                         {
                                                                             try
                                                                             {
-                                                                                duration = GetDecimalDuration(values[i], units[i], "m");
+                                                                                if (bIsPoolMateFile)
+                                                                                {
+                                                                                    // PoolMate has 'duration' as lap duration in seconds
+                                                                                    poolMateAct.lapDuration = GetDecimalDuration(values[i], units[i], "s");
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    duration = GetDecimalDuration(values[i], units[i], "m");
+                                                                                }
                                                                             }
+                                                                            catch (Exception e)
+                                                                            {
+                                                                                WriteToLogfile("Line contains wrong duration format: " + originalLine, true);
+                                                                                WriteToLogfile("Error: " + e.Message, true);
+                                                                                if (!bFoundEmptyLine)
+                                                                                {
+                                                                                    monitor.ErrorText = Properties.Resources.ID_WrongDurationFormat + " (" + e.Message + ")"
+                                                                                        + "\n" + columns[i] + " --> " + values[i] + "\n"
+                                                                                        + Properties.Resources.ID_ReferToLogFile + LogfileName();
+                                                                                    resultCode = false;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        break;
+
+                                                                    case "totalduration":
+                                                                        if (bImporting || bCheckingFormat)
+                                                                        {
+                                                                            try
+                                                                            {                                                                               
+                                                                               duration = GetDecimalDuration(values[i], "", "s");
+                                                                            }
+
                                                                             catch (Exception e)
                                                                             {
                                                                                 WriteToLogfile("Line contains wrong duration format: " + originalLine, true);
@@ -2037,7 +2242,13 @@ namespace WbSportTracksCsvImporter
                                                                         {
                                                                             try
                                                                             {
-                                                                                if (bIsrowpro3File && (units[i]=="") )
+                                                                                if (bIsPoolMateFile)
+                                                                                {
+                                                                                    // the units for the PoolMate Pro has it's own column
+                                                                                    string poolMateUnits = values[poolMateUnitsIdx];
+                                                                                    poolMateAct.lapDistance = GetDecimalDistanceAsMeters(values[i], poolMateUnits, 1.0);
+                                                                                                                                                                    }
+                                                                                else if (bIsrowpro3File && (units[i]=="") )
                                                                                 {
                                                                                     distance = GetDecimalDistanceAsMeters(values[i], units[i], 1.0);
                                                                                 }
@@ -2066,7 +2277,17 @@ namespace WbSportTracksCsvImporter
                                                                         {
                                                                             try
                                                                             {
+                                                                                if (bIsPoolMateFile)
+                                                                                {
+                                                                                    // the units for the PoolMate Pro has it's own column
+                                                                                    units[i] = values[poolMateUnitsIdx];
+
+                                                                                    // set the units in the poolMate activity to display in the Notes section
+                                                                                    poolMateAct.units = units[i];
+                                                                                }
+                                                                                
                                                                                 distance = GetDecimalDistanceAsMeters(values[i], units[i], 1.0);
+
                                                                             }
                                                                             catch (Exception e)
                                                                             {
@@ -2794,6 +3015,44 @@ namespace WbSportTracksCsvImporter
                                                                         }
                                                                         break;
 
+                                                                    case "strokerate":
+                                                                        {
+                                                                            if (bImporting || bCheckingTrack)
+                                                                            {
+                                                                                poolMateAct.lapStrokeRate = GetDecimalValue(values[i], null);
+                                                                                WriteToLogfile("Setting lab sr=" + poolMateAct.lapStrokeRate.ToString(), true);
+                                                                            }
+                                                                        }
+                                                                        break;
+
+                                                                    case "efficiency":
+                                                                        {
+                                                                            if (bImporting || bCheckingTrack)
+                                                                            {
+                                                                                poolMateAct.lapEfficiency = GetDecimalValue(values[i], null);
+                                                                            }
+                                                                        }
+                                                                        break;
+
+                                                                    case "units":
+                                                                        {
+                                                                            if (bImporting || bCheckingTrack)
+                                                                            {
+                                                                                poolMateAct.units = values[i];
+                                                                            }
+                                                                        }
+                                                                        break;
+
+                                                                    case "pool":
+                                                                        {
+
+                                                                            if (bImporting || bCheckingTrack)
+                                                                            {
+                                                                                poolMateAct.poolLength = values[i];
+                                                                            }
+                                                                        }
+                                                                        break;
+
                                                                     default:
                                                                         if (bImporting || bCheckingTrack)
                                                                         {
@@ -2816,7 +3075,7 @@ namespace WbSportTracksCsvImporter
                                                             {
                                                                 dateAndTime = iBikeTimeStampStart + iBikeCurrentDuration;
                                                                 dateAndTimeValid=true;
-                                                                //WriteToLogfile("Build time for iBike line: " + dateAndTime.ToString(), true);
+                                                                WriteToLogfile("Build time for iBike line: " + dateAndTime.ToString(), true);
                                                             }
                                                         }
 
@@ -2826,7 +3085,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = true;
-                                                            //WriteToLogfile("Date and time valid: " + startTime.ToString(), true);
+                                                            WriteToLogfile("Date and time valid: " + startTime.ToString(), true);
 
                                                         }
                                                         else if (dateValid && timeValid)
@@ -2835,7 +3094,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = true;
-                                                            //WriteToLogfile("Date valid and time valid: " + startTime.ToString(), true);
+                                                            WriteToLogfile("Date valid and time valid: " + startTime.ToString(), true);
                                                         }
                                                         else if (dateFromTimeValid)
                                                         {
@@ -2843,7 +3102,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = true;
-                                                            //WriteToLogfile("Time valid: " + startTime.ToString(), true);
+                                                            WriteToLogfile("Time valid: " + startTime.ToString(), true);
                                                         }
                                                         else if (dateValid)
                                                         {
@@ -2851,7 +3110,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = false;
                                                             trackPointContainsTime = false;
-                                                            //WriteToLogfile("Date valid: " + startTime.ToString(), true);
+                                                            WriteToLogfile("Date valid: " + startTime.ToString(), true);
                                                         }
                                                         else if (timeValid)
                                                         {
@@ -2859,7 +3118,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = true;
-                                                            //WriteToLogfile("Time valid: " + startTime.ToString(), true);
+                                                            WriteToLogfile("Time valid: " + startTime.ToString(), true);
                                                         }
                                                         else
                                                         {
@@ -2867,7 +3126,7 @@ namespace WbSportTracksCsvImporter
                                                             startTimeContainsDate = true;
                                                             startTimeContainsTime = true;
                                                             trackPointContainsTime = false;
-                                                            //WriteToLogfile("Date and Time invalid, use file time: " + startTime.ToString(), true);
+                                                            WriteToLogfile("Date and Time invalid, use file time: " + startTime.ToString(), true);
                                                         }
 
                                                         if (bCheckingTrack)
@@ -2880,8 +3139,8 @@ namespace WbSportTracksCsvImporter
                                                             {
                                                                 if (startTime.Date == dateFirstLine.Date)
                                                                 {
-                                                                    //WriteToLogfile("startTime.Date: " + startTime.Date.ToString(), true);
-                                                                    //WriteToLogfile("dateFirstLine.Date: " + dateFirstLine.Date.ToString(), true);
+                                                                    WriteToLogfile("startTime.Date: " + startTime.Date.ToString(), true);
+                                                                    WriteToLogfile("dateFirstLine.Date: " + dateFirstLine.Date.ToString(), true);
                                                                     sameDate++;
                                                                 }
                                                             }
@@ -2892,7 +3151,44 @@ namespace WbSportTracksCsvImporter
                                                         {
                                                             if (resultCode)
                                                             {
-                                                                if (startTimeContainsDate)
+                                                                // check for another lap from the same swim session
+                                                                if (bIsPoolMateFile && (poolMateAct.currentActivity != null) && 
+                                                                    poolMateAct.currentActivity.StartTime.ToLocalTime() == startTime.ToLocalTime())
+                                                                {
+                                                                    try
+                                                                    {
+                                                                        // add a new lap to the existing poolmate activity
+                                                                        //ILapInfo poolMateLap = null;
+
+                                                                        int lastLap = poolMateAct.currentActivity.Laps.Count - 1;
+                                                                        DateTime newStartTime = poolMateAct.currentActivity.Laps[lastLap].StartTime +
+                                                                                            poolMateAct.currentActivity.Laps[lastLap].TotalTime;
+
+
+                                                                        // add in the first lap
+                                                                        WriteToLogfile("Adding addtl lap with sr=" + poolMateAct.lapStrokeRate.ToString(), true);
+                                                                        addPoolMateLap(newStartTime, poolMateAct);
+
+                                                                        // reset data from this line read
+                                                                        // be sure to keep currentAct & total data
+                                                                        poolMateAct.lapDistance = double.NaN;
+                                                                        poolMateAct.lapStrokeRate = float.NaN;
+                                                                        poolMateAct.lapEfficiency = float.NaN;
+                                                                        poolMateAct.lapDuration = TimeSpan.Zero;
+                                                                        poolMateAct.nextLapStartTime = DateTime.MinValue;
+                                                                        
+
+                                                                        //poolMateLap = poolMateAct.currentActivity.Laps.Add(newStartTime, poolMateAct.lapDuration);
+
+                                                                    }
+                                                                    catch (Exception e)
+                                                                    {
+                                                                        WriteToLogfile("Failed to add lap with start time: " + startTime.ToLocalTime().ToString(), true);
+                                                                        WriteToLogfile("Error: " + e.Message, true);
+                                                                    }
+
+                                                                }
+                                                                else if (startTimeContainsDate)
                                                                 {
                                                                     try
                                                                     {
@@ -2909,6 +3205,7 @@ namespace WbSportTracksCsvImporter
                                                                         else
                                                                         {
                                                                             activity = importResults.AddActivity(startTime);
+                                                                          
                                                                         }
 
                                                                         /*
@@ -2926,6 +3223,31 @@ namespace WbSportTracksCsvImporter
                                                                         //activity.Weather.TemperatureCelsius = 30;
                                                                         //activity.Weather.ConditionsNotes = "blah";
 
+                                                                        if (bIsPoolMateFile)
+                                                                        {
+                                                                            WriteToLogfile("Adding NEW Activity @ " + activity.StartTime.ToString(), true);
+                                                                            
+                                                                            // finish off the last swim session
+                                                                            if (poolMateAct.currentActivity != null)
+                                                                            {
+                                                                                addPoolMateSummaryDetails(poolMateAct);
+                                                                                
+                                                                                // reset totals
+                                                                                poolMateAct.totalLapEfficiency = 0;
+                                                                                poolMateAct.totalLapStrokeRate = 0;
+
+                                                                                poolMateAct.currentActivity = null;
+                                                                                
+                                                                            }
+                                                                            // start with the new activity
+                                                                            poolMateAct.currentActivity = activity;
+
+                                                                            // add in the first lap
+                                                                            WriteToLogfile("Adding first lap with sr=" + poolMateAct.lapStrokeRate.ToString(), true);
+                                                                            addPoolMateLap(activity.StartTime, poolMateAct);
+
+                                                                        }
+                                                                        
 
                                                                         if (bContainsTrackData)
                                                                         {
@@ -3186,11 +3508,28 @@ namespace WbSportTracksCsvImporter
 
                                                                         if (comment.Length > 0)
                                                                         {
-                                                                            activity.Notes = comment;
+                                                                            if (activity.Notes.Length > 0)
+                                                                            {
+                                                                                activity.Notes += "\n\n" + comment;
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                activity.Notes = comment;
+                                                                            }
                                                                         }
                                                                         else
                                                                         {
-                                                                            activity.Notes = Path.GetFileName(filename);
+
+                                                                            if (activity.Notes.Length > 0)
+                                                                            {
+                                                                                WriteToLogfile("Adding to existing notes: " + activity.Notes, true);
+                                                                                activity.Notes += "\n\n" +Path.GetFileName(filename);
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                WriteToLogfile("Adding new notes", true);
+                                                                                activity.Notes = Path.GetFileName(filename);
+                                                                            }
                                                                         }
 
                                                                         if ((intensity >= 1) && (intensity <= 10))
@@ -3434,7 +3773,7 @@ namespace WbSportTracksCsvImporter
                                                                 }
                                                             }
                                                         }
-
+                                                        
                                                         if (bIsIbikeFile)
                                                         {
                                                             //iBikeTimeStamp
@@ -3528,6 +3867,12 @@ namespace WbSportTracksCsvImporter
                                             }
                                         }
 
+
+                                        if (bIsPoolMateFile && bImporting)
+                                        {
+                                            // need to add summary details for last workout in the file
+                                            addPoolMateSummaryDetails(poolMateAct);
+                                        }
 
                                         if (bImporting && (activityTrack!=null))
                                         {

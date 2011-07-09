@@ -45,7 +45,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\Dokumente und Einstellungen\All Users\Anwendungsdaten\ZoneFiveSoftware\SportTracks\3\Plugins\Installed\360bc71a-f3b5-4252-8a95-574e5e649532\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\3\Plugins\Installed\360bc71a-f3b5-4252-8a95-574e5e649532\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,12 +53,12 @@
   <ItemGroup>
     <Reference Include="Common.Data, Version=3.0.3858.19861, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Programme\Zone Five Software\SportTracks 3\Common.Data.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Zone Five Software\SportTracks 3\Common.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Common.Visuals, Version=3.0.3858.19866, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Programme\Zone Five Software\SportTracks 3\Common.Visuals.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Zone Five Software\SportTracks 3\Common.Visuals.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Liesmich.txt" />
+    <Content Include="plugin.xml" />
     <Content Include="Readme.txt" />
     <Content Include="Resources\Image_24_FileCSV.png" />
   </ItemGroup>
