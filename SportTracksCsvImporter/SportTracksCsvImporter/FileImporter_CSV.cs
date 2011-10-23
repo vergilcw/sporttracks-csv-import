@@ -1122,18 +1122,62 @@ namespace WbSportTracksCsvImporter
             return retVal;
         }
 
-
+        //
+        // addPoolMateLap
+        // Description: Adds a lap to ST activity
+        // Inputs:
+        //         startTime - beginning time of the lab
+        //         pmAct - PoolMate activity to add lap for
         void addPoolMateLap(DateTime startTime, PoolMateActivity pmAct)
         {
+            float totalMeters = 0;
+
+            // add the distance meters track
+            // this is necessary to use the ST distance/pace/time calculations
+            if (pmAct.currentActivity.DistanceMetersTrack == null)
+            {
+                // first lap
+                // we need to add a bogus lap with 0 distance to get the start time in
+                // Through testing, I found that without this track, the time calculated
+                // within ST is off by the amout of the first lap
+                pmAct.currentActivity.DistanceMetersTrack = new DistanceDataTrack();
+                pmAct.currentActivity.DistanceMetersTrack.Add(startTime, (float)0);
+           
+            }
+            else
+            {
+                // keep track of the total distance swam
+                totalMeters = pmAct.currentActivity.DistanceMetersTrack.Max;
+            }
+
+            // add track for this lap
+            pmAct.currentActivity.DistanceMetersTrack.Add(startTime + pmAct.lapDuration, (float) pmAct.lapDistance + totalMeters);
+            WriteToLogfile("Adding DistanceDataTrack Track: (" + (startTime + pmAct.lapDuration).ToLocalTime() + " " + (totalMeters + pmAct.lapDistance).ToString(), true);
+            
+            // add the lap within the activity
             ILapInfo pmLap = pmAct.currentActivity.Laps.Add(startTime, pmAct.lapDuration);
             
-            // this isn't displayed
+            // this isn't displayed for some reason
             //pmLap.TotalCalories = pmAct.lapCalories;
             pmLap.TotalDistanceMeters = (float)pmAct.lapDistance;
             if (!float.IsNaN(pmAct.lapStrokeRate))
             {
+                // use the stroke rate and save a cadence in ST 
+                if (pmAct.currentActivity.CadencePerMinuteTrack == null)
+                {
+                    pmAct.currentActivity.CadencePerMinuteTrack = new ZoneFiveSoftware.Common.Data.NumericTimeDataSeries();
+                    pmAct.currentActivity.CadencePerMinuteTrack.Add(startTime, pmAct.lapStrokeRate);
+                    WriteToLogfile("Adding CadenceTrack Track: (" + (startTime).ToLocalTime() + " " + pmAct.lapStrokeRate.ToString(), true);
+
+                }
+
+                pmAct.currentActivity.CadencePerMinuteTrack.Add(startTime + pmAct.lapDuration, pmAct.lapStrokeRate);
+
+                WriteToLogfile("Adding CadenceTrack Track: (" + (startTime +pmAct.lapDuration).ToLocalTime() + " " + pmAct.lapStrokeRate.ToString(), true);
+
                 // for some reason, this isn't showing up in the splits chart
                 pmLap.AverageCadencePerMinute = pmAct.lapStrokeRate;
+                
                 // need translations?
                 pmLap.Notes = "StrokeRate=" + pmAct.lapStrokeRate.ToString();
                 pmAct.totalLapStrokeRate += pmAct.lapStrokeRate;
@@ -1141,17 +1185,31 @@ namespace WbSportTracksCsvImporter
             }
             if (!float.IsNaN(pmAct.lapEfficiency))
             {
+                // Since nothing in ST really translates to efficiency, 
+                // go ahead and add this into the Notes section of the lap
                 if ((pmLap.Notes != null) && (pmLap.Notes != ""))
                 {
                     pmLap.Notes += "; ";
                 }
+
                 // CA: need translations?
                 pmLap.Notes += "Efficiency=" + pmAct.lapEfficiency.ToString();
+                
+                // save off total efficiency to add to the overall notes of the activity
                 pmAct.totalLapEfficiency += pmAct.lapEfficiency;
 
             }
+
+
         }
 
+
+        //
+        // addPoolMateSummaryDetails
+        // Description: Adds a lap to ST activity
+        // Inputs:
+        //         startTime - beginning time of the lab
+        //         pmAct - PoolMate activity with info
         void addPoolMateSummaryDetails(PoolMateActivity pmAct)
         {
             string newNotes = "";
@@ -1184,6 +1242,7 @@ namespace WbSportTracksCsvImporter
                 aveStrokeRate = pmAct.totalLapStrokeRate / validLaps;
                 aveEfficiency = pmAct.totalLapEfficiency / validLaps;
 
+                // build the text for the overall Activity summary
                 // CA: need to translate the text
                 if (aveStrokeRate > 0)
                 {
@@ -1202,6 +1261,7 @@ namespace WbSportTracksCsvImporter
 
                 if (newNotes != "")
                 {
+                    // be sure not to over-write any existing notes
                     if (pmAct.currentActivity.Notes == null)
                     {
                         pmAct.currentActivity.Notes = newNotes;
@@ -1213,26 +1273,43 @@ namespace WbSportTracksCsvImporter
                     }
                 }
 
-                if (aveStrokeRate > 0)
+                if (pmAct.currentActivity.CadencePerMinuteTrack != null)
                 {
-                    pmAct.currentActivity.AverageCadencePerMinuteEntered = aveStrokeRate;
+                    pmAct.currentActivity.AverageCadencePerMinuteEntered = pmAct.currentActivity.CadencePerMinuteTrack.Avg;
+                  
                 }
-
+                
+                
                 // add in a bogus rest lap at the end to represent all of the rest times
                 // this is only done since there is no indication of rest in the csv file
                 // Some people may want their "swim only time" displayed as the total time
                 // rather than the total pool time
-                /* Unfortunately, ST doesn't calculate stopped time from "rest" laps :( */
+                
                 if (pmAct.currentActivity.TotalTimeEntered > totalLapDuration)
                 {
                     ILapInfo newLap = pmAct.currentActivity.Laps.Add(lastLapEnd,
                         pmAct.currentActivity.TotalTimeEntered - totalLapDuration);
                     newLap.Notes = "Pause time summation";
                     newLap.Rest = true;
+                    newLap.AverageCadencePerMinute = float.NaN;
 
                 }
+               
+              
+                if ( (pmAct.currentActivity.TotalTimeEntered > totalLapDuration) &&
+                     (pmAct.currentActivity.DistanceMetersTrack != null) )
+                {
+                    DateTime pauseTrackStart = lastLapEnd + (pmAct.currentActivity.TotalTimeEntered - totalLapDuration);
+                    pmAct.currentActivity.DistanceMetersTrack.Add(pauseTrackStart, pmAct.currentActivity.DistanceMetersTrack.Max);
+                    WriteToLogfile("Adding DistanceTrack Track: (" + (pauseTrackStart).ToLocalTime() + " " + pmAct.currentActivity.DistanceMetersTrack.Max, true);
 
+                    
+                }
+                
+                // tell ST to use the distance from the poolmate file rather than
+                // the calculated distance from the track point data
                 pmAct.currentActivity.UseEnteredData = true;
+                
             }
         }
 
@@ -1980,14 +2057,7 @@ namespace WbSportTracksCsvImporter
                                                         int sleepQuality = 0;
                                                         bool newLap = false;
                                                         TimeSpan sleep = TimeSpan.Zero;
-                                                        
-                                                        //float poolMateLapCalories = float.NaN;
-                                                        //double poolMateLapDistance = double.NaN;
-                                                        //float poolMateLapStrokeRate = float.NaN;
-                                                        //string poolMateLapEfficiency = null;
-                                                        //TimeSpan poolMateLapDuration = TimeSpan.Zero;
-                                                        //DateTime poolMateNextLapStartTime = DateTime.MinValue;
-                                                                        
+                                                                                                                             
 
                                                          for (int i = 0; i < values.GetLength(0); i++)
                                                         {
@@ -2218,8 +2288,9 @@ namespace WbSportTracksCsvImporter
                                                                         if (bImporting || bCheckingFormat)
                                                                         {
                                                                             try
-                                                                            {                                                                               
-                                                                               duration = GetDecimalDuration(values[i], "", "s");
+                                                                            {
+                                                                                duration = GetDecimalDuration(values[i], "", "s");
+                                                                            
                                                                             }
 
                                                                             catch (Exception e)
@@ -3015,6 +3086,7 @@ namespace WbSportTracksCsvImporter
                                                                         }
                                                                         break;
 
+                                                                    // PoolMate only
                                                                     case "strokerate":
                                                                         {
                                                                             if (bImporting || bCheckingTrack)
@@ -3025,6 +3097,7 @@ namespace WbSportTracksCsvImporter
                                                                         }
                                                                         break;
 
+                                                                    // PoolMate only
                                                                     case "efficiency":
                                                                         {
                                                                             if (bImporting || bCheckingTrack)
@@ -3034,6 +3107,7 @@ namespace WbSportTracksCsvImporter
                                                                         }
                                                                         break;
 
+                                                                    // PoolMate only
                                                                     case "units":
                                                                         {
                                                                             if (bImporting || bCheckingTrack)
@@ -3043,6 +3117,7 @@ namespace WbSportTracksCsvImporter
                                                                         }
                                                                         break;
 
+                                                                    // PoolMate only
                                                                     case "pool":
                                                                         {
 
@@ -3165,8 +3240,7 @@ namespace WbSportTracksCsvImporter
                                                                                             poolMateAct.currentActivity.Laps[lastLap].TotalTime;
 
 
-                                                                        // add in the first lap
-                                                                        WriteToLogfile("Adding addtl lap with sr=" + poolMateAct.lapStrokeRate.ToString(), true);
+                                                                        // add in the lap
                                                                         addPoolMateLap(newStartTime, poolMateAct);
 
                                                                         // reset data from this line read
@@ -3177,9 +3251,7 @@ namespace WbSportTracksCsvImporter
                                                                         poolMateAct.lapDuration = TimeSpan.Zero;
                                                                         poolMateAct.nextLapStartTime = DateTime.MinValue;
                                                                         
-
-                                                                        //poolMateLap = poolMateAct.currentActivity.Laps.Add(newStartTime, poolMateAct.lapDuration);
-
+                                                                        
                                                                     }
                                                                     catch (Exception e)
                                                                     {
@@ -3243,7 +3315,6 @@ namespace WbSportTracksCsvImporter
                                                                             poolMateAct.currentActivity = activity;
 
                                                                             // add in the first lap
-                                                                            WriteToLogfile("Adding first lap with sr=" + poolMateAct.lapStrokeRate.ToString(), true);
                                                                             addPoolMateLap(activity.StartTime, poolMateAct);
 
                                                                         }
