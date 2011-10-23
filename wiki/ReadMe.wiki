@@ -298,3 +298,12 @@ that needs to be inserted into the iBike file (the iBike file does not contain i
 Then the plugin finds the threshold speed from the GPS track so that the resulting pause time matches
 the "time to be inserted". For the pause intervals (where speed is below threshold in the GPS data),
 the plugin inserts 0 for power and cadence. In that way the data profile of the iBike file is not changed.
+
+*PoolMate Pro Fetures*
+
+The WB CSV Importer will import csv files exported from the Swimovate PoolMate Pro watch. 
+- add laps within SportTracks for each lap and imput the stroke rate & efficiency in the notes sectoin of each lap.
+- add total distance and time in the activity summary
+- add "cadence" tracks with stroke rate to allow it to be graphed (cadence chart)
+- mark any zero length lap as a "rest" lap within SportTracks
+
