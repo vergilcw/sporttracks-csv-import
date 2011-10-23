@@ -45,7 +45,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\3\Plugins\Installed\360bc71a-f3b5-4252-8a95-574e5e649532\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\3\Plugins\Installed\360bc71a-f3b5-4252-8a95-574e5e649532\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
